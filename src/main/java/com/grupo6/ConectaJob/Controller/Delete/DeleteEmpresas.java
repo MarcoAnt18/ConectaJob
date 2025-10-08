@@ -1,5 +1,6 @@
 package com.grupo6.ConectaJob.Controller.Delete;
 
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.searchDTO;
 import com.grupo6.ConectaJob.Model.DTO.searchVaga;
 import com.grupo6.ConectaJob.Service.EmpresaService;
@@ -25,6 +26,15 @@ public class DeleteEmpresas {
     @DeleteMapping("/Vaga")
     public boolean deletarVaga (@RequestBody searchVaga searchVaga){
         empresaService.deleteVaga(searchVaga.nomeVaga(), searchVaga.empresaResponsavelCNPJ());
+        return true;
+    }
+
+    //Para depois
+    @DeleteMapping("/notificacoes")
+    public boolean deletarNotificacao (@RequestBody deletarNotifcacaoDTO deletarNotifcacaoDTO){
+        empresaService.apagarNotificacao(deletarNotifcacaoDTO.nomeUsuario(),
+                                         deletarNotifcacaoDTO.nomeVaga(),
+                                         deletarNotifcacaoDTO.empresaCNPJ());
         return true;
     }
 

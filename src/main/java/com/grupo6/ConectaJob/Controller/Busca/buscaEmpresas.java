@@ -4,6 +4,7 @@ import com.grupo6.ConectaJob.Model.DTO.retornoEmpresaExiste;
 import com.grupo6.ConectaJob.Model.DTO.retornoVagaExistente;
 import com.grupo6.ConectaJob.Model.DTO.searchDTO;
 import com.grupo6.ConectaJob.Model.DTO.searchVaga;
+import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
 import com.grupo6.ConectaJob.Service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,8 @@ public class buscaEmpresas {
         return ResponseEntity.ok(empresaService.buscaTodasVagas());
     }
 
-
+    @GetMapping("notificacoes")
+    public ResponseEntity<List<Notificacao>> ListarNotificacoes(@RequestBody searchDTO searchCNPJ){
+        return ResponseEntity.ok(empresaService.buscarNOtificacoes(searchCNPJ));
+    }
 }

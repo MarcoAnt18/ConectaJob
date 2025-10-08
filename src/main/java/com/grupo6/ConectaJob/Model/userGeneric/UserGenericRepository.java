@@ -6,4 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserGenericRepository extends MongoRepository <userGeneric,String> {
     UserDetails findByCpf(String cpf);
+
+    userGeneric findUserGenericByCpf(String cpf);
 }

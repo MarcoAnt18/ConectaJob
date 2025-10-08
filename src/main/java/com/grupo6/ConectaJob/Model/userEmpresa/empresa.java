@@ -1,10 +1,12 @@
 package com.grupo6.ConectaJob.Model.userEmpresa;
 
 import com.grupo6.ConectaJob.Model.listaAvaliacoesSegundoCargo;
+import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "user_empresa")
@@ -21,15 +23,19 @@ public class empresa {
     private String ftPerfilLink;
     private List<servicoPrestado> servicoPrestado;
     private listaAvaliacoesSegundoCargo avaliacoesSegundoCargo;
+    private String meioDeComunicacao;
+    private List<Notificacao> notificacoes;
 
     public empresa(String CPFatrelado, String CNPJ, String nomeEmpresa,
-                   String segmento,List<servicoPrestado> servicoPrestado) {
+                   String segmento,List<servicoPrestado> servicoPrestado, String meioDeComunicacao) {
 
         this.CPFatrelado = CPFatrelado;
         this.CNPJ = CNPJ;
         this.nomeEmpresa = nomeEmpresa;
         this.segmento = segmento;
         this.servicoPrestado = servicoPrestado;
+        this.meioDeComunicacao = meioDeComunicacao;
+        this.notificacoes = new ArrayList<>();
     }
 
     @Override
@@ -105,5 +111,25 @@ public class empresa {
 
     public void setAvaliacoesSegundoCargo(listaAvaliacoesSegundoCargo avaliacoesSegundoCargo) {
         this.avaliacoesSegundoCargo = avaliacoesSegundoCargo;
+    }
+
+    public String getMeioDeComunicacao(){
+        return this.meioDeComunicacao;
+    }
+
+    public void setMeioDeComunicacao(String meioDeComunicacao){
+        this.meioDeComunicacao = meioDeComunicacao;
+    }
+
+    public List<Notificacao> getNotificacoes() {
+        return notificacoes;
+    }
+
+    public void setNotificacoes(Notificacao notificacao){
+        this.notificacoes.add(notificacao);
+    }
+
+    public void deleteNotificacao(Notificacao notificacao){
+        this.notificacoes.remove(notificacao);
     }
 }
