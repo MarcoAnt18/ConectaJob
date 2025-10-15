@@ -45,7 +45,7 @@ public class userTrabalhadorService {
     }
 
     public userTrabalhador buscaruserTrabalhador(){
-        var trabalhadoruser = userTrabalhador.finduserTrabalhadorbyCPF(buscar)
+        var trabalhadoruser = userTrabalhador.finduserTrabalhadorbyCPF(buscar);
     }
 
 }

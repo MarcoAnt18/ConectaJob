@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface useravaliacaoRepository extends MongoRepository <avaliacao, String>{
 
-    @Query("{ '_Avaliador': ?0 }")
-    avaliacao findavaliacaobyAvaliador(String avaliador);
+    @Query("{ '_CNPJAvaliador': ?0 }")
+    avaliacao findavaliacaobyCNPJ(String CNPJ);
 }

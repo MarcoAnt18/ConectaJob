@@ -1,4 +1,4 @@
 package com.grupo6.ConectaJob.Model.DTO;
 
-public record novaAvaliacaoDTO(String Avaliacao, String CNPJ, int nota, String Comentario) {
+public record novaAvaliacaoDTO(String Avaliador, String Avaliado, String CNPJ, Integer nota, String Comentario) {
 }

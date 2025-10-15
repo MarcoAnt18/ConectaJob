@@ -15,17 +15,21 @@ public class avaliacao {
     @Id
     private String id;
     private String Avaliador;
+    private String Avaliado;
     private String CNPJAvaliador;
     private int nota;
     private String Comentario;
 
-    public avaliacao(String avaliador, String CNPJ, int nota, String Comentario){
+    public avaliacao(String avaliador, String CNPJAvaliado, String Avaliado, int nota, String Comentario){
         this.Avaliador = avaliador;
-        this.CNPJAvaliador = CNPJ;
+        this.Avaliado = Avaliado;
+        this.CNPJAvaliador = CNPJAvaliado;
         this.nota = nota;
         this.Comentario = Comentario;
 
     }
+
+
 
     public void setAvaliador(String avaliador) {
         Avaliador = avaliador;
@@ -47,6 +51,8 @@ public class avaliacao {
         Comentario = comentario;
     }
 
+    public void setAvaliado(String avaliado){ this.Avaliado = Avaliado;}
+
     public String getAvaliador() {
         return Avaliador;
     }
@@ -66,4 +72,6 @@ public class avaliacao {
     public String getId() {
         return id;
     }
+
+    public String getAvaliado(){return Avaliado;}
 }
