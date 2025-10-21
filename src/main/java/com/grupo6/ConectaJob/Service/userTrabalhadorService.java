@@ -10,20 +10,27 @@ import com.grupo6.ConectaJob.Model.userGeneric.userGeneric;
 import com.grupo6.ConectaJob.Model.userTrabalhador;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
+
 public class userTrabalhadorService {
     private userTrabalhadorRepository userTrabalhador;
-    public userGeneric buscartrabalhador(buscarTrabalhadorDTO trabalhadorDTO){
-        var trabalhador = userTrabalhador.finduserTrabalhadorbyCPF(trabalhadorDTO.cpf());
+    public boolean edittrabalhador (String cpf, createTrabalhadorUserDTO trabalhadorDTO){
+        var trabAntigo = userTrabalhador.finduserTrabalhadorbyCPF(cpf);
+        boolean verificador = false;
 
-        if (trabalhador == null){
-            throw new notFound("trabalhador não encontrado");
+        if (trabAntigo == null){
+            throw new notFound("o trabalhador nao existe");
+        } else {
+            var trabNovo = new userTrabalhador((trabalhadorDTO.cpf() == null)? trabAntigo.getCpf() : trabalhadorDTO.cpf(), (trabalhadorDTO.nome() == null)? trabAntigo.getNome() : trabalhadorDTO.nome(), (trabalhadorDTO.senha() == null)? trabAntigo.getSenha() : trabalhadorDTO.senha(), (trabalhadorDTO.avaliacoes() == null)? trabAntigo.getAvaliacoes() : trabalhadorDTO.avaliacoes());
+            trabAntigo.setId(trabAntigo.getId());
+            userTrabalhador.save(trabNovo);
+            verificador = true;
         }
-
-        return new returnTrabalhadorDTO(trabalhador.getUsername(), trabalhador.getPassword() trabalhador.)
+        return verificador;
 
     }
 
-    public boolean deletetrabalhador (loginTrabalhadorDTO trabalhadordto, String cpf){
+    public boolean deletetrabalhador (String cpf){
         var cpfusuario = userTrabalhador.finduserTrabalhadorbyCPF(cpf);
 
         if (cpfusuario == null){
@@ -39,13 +46,20 @@ public class userTrabalhadorService {
             throw new notFound("usuario nao encontrado");
         }
 
-        trabalhadoruser = new userTrabalhador(trabalhadoruserDTO.cpf(), trabalhadoruserDTO.nome(), trabalhadoruserDTO.senha());
+        trabalhadoruser = new userTrabalhador(trabalhadoruserDTO.cpf(), trabalhadoruserDTO.nome(), trabalhadoruserDTO.senha(), trabalhadoruserDTO.avaliacoes());
         userTrabalhador.save(trabalhadoruser);
         return true;
     }
 
-    public userTrabalhador buscaruserTrabalhador(){
-        var trabalhadoruser = userTrabalhador.finduserTrabalhadorbyCPF(buscar);
+    public createTrabalhadorUserDTO buscaruserTrabalhador(String cpf){
+        var trabalhadoruser = userTrabalhador.finduserTrabalhadorbyCPF(cpf);
+
+        if(trabalhadoruser == null){
+            throw new notFound("o usuario nao existe");
+        }
+
+        System.out.println(trabalhadoruser);
+        return new createTrabalhadorUserDTO(trabalhadoruser.getCpf(), trabalhadoruser.getNome(), trabalhadoruser.getSenha(), trabalhadoruser.getAvaliacoes());
     }
 
 }

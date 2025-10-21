@@ -13,6 +13,13 @@ public class userTrabalhador extends userGeneric {
     private List<avaliacao> avaliacoes;
     private com.grupo6.ConectaJob.Model.listaAvaliacoesSegundoCargo listaAvaliacoesSegundoCargo;
 
+    public userTrabalhador(){
+
+    }
+
+    public userTrabalhador(String cpf, String nome, String senha, List<avaliacao> avaliacoes) {
+    }
+
     public List<avaliacao> getAvaliacoes() {
         return avaliacoes;
     }
