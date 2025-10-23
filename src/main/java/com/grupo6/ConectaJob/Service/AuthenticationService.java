@@ -71,6 +71,10 @@ public class AuthenticationService {
 
         var vagaEscolhida = empresaService.buscarVagaTrabalho(criarNotificacaoDTO.nomeVaga(), criarNotificacaoDTO.empresaResponsavelCPNJ());
 
+        if (vagaEscolhida == null){
+            throw new notFound("Vaga com esse nome não encontrada na empresa");
+        }
+
         Notificacao novaNotificacao = new Notificacao(usuarioResponsavel,
                                                       criarNotificacaoDTO.contato(),
                                                  "Aplicação para vaga",
