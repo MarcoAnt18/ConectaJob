@@ -6,6 +6,7 @@ import com.grupo6.ConectaJob.Model.DTO.searchDTO;
 import com.grupo6.ConectaJob.Model.DTO.searchVaga;
 import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
+import com.grupo6.ConectaJob.Service.VagaService;
 import com.grupo6.ConectaJob.Service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class buscaEmpresas {
     @Autowired
     private EmpresaService empresaService;
 
+    @Autowired
+    private VagaService vagaService;
+
     @GetMapping("/Empresas")
     public ResponseEntity<retornoEmpresaExiste> ProcurarEmpresasExistentes (@RequestBody searchDTO searchCNPJ){
         return ResponseEntity.ok(empresaService.buscaEmpresa(searchCNPJ.cnpj()));
@@ -30,12 +34,12 @@ public class buscaEmpresas {
 
     @GetMapping("/Vaga")
     public ResponseEntity<retornoVagaExistente> ProcurarVagaIndividual(@RequestBody searchVaga searchVaga){
-        return ResponseEntity.ok(empresaService.BuscarVagaPorNome(searchVaga));
+        return ResponseEntity.ok(vagaService.BuscarVagaPorNome(searchVaga));
     }
 
     @GetMapping("/VagasTodas")
     public ResponseEntity<List<vagaTrabalho>> ProcurarVagasExistentes (){
-        return ResponseEntity.ok(empresaService.buscaTodasVagas());
+        return ResponseEntity.ok(vagaService.buscaTodasVagas());
     }
 
     @GetMapping("notificacoes")

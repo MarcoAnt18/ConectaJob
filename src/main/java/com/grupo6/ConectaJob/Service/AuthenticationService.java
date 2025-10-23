@@ -57,7 +57,7 @@ public class AuthenticationService {
     }
 
     //O correto é o usuário também ter a variável de contato, adicionar no userGeneric depois.
-    @PostMapping("/aplicarVaga")
+    /*@PostMapping("/aplicarVaga")
     public boolean aplicarParaVaga(@RequestBody criarNotificacaoDTO criarNotificacaoDTO){
 
         var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(criarNotificacaoDTO.empresaResponsavelCPNJ());
@@ -85,5 +85,5 @@ public class AuthenticationService {
         empresaRepository.save(empresaResponsavel);
 
         return true;
-    }
+    }*/
 }

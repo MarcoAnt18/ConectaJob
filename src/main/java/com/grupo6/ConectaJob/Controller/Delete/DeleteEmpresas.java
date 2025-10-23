@@ -3,6 +3,7 @@ package com.grupo6.ConectaJob.Controller.Delete;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.searchDTO;
 import com.grupo6.ConectaJob.Model.DTO.searchVaga;
+import com.grupo6.ConectaJob.Service.VagaService;
 import com.grupo6.ConectaJob.Service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,9 @@ public class DeleteEmpresas {
     @Autowired
     private EmpresaService empresaService;
 
+    @Autowired
+    private VagaService vagaService;
+
     @DeleteMapping("/Empresa")
     public boolean deletarEmpresa (@RequestBody searchDTO searchCNPJ){
         empresaService.deletarEmpresa(searchCNPJ);
@@ -25,7 +29,7 @@ public class DeleteEmpresas {
 
     @DeleteMapping("/Vaga")
     public boolean deletarVaga (@RequestBody searchVaga searchVaga){
-        empresaService.deleteVaga(searchVaga.nomeVaga(), searchVaga.empresaResponsavelCNPJ());
+        vagaService.deleteVaga(searchVaga.nomeVaga(), searchVaga.empresaResponsavelCNPJ());
         return true;
     }
 

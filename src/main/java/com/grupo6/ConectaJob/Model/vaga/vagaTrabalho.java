@@ -44,6 +44,7 @@ public class vagaTrabalho {
     public vagaTrabalho() {
     }
 
+
     public String getVagaId() {
         return vagaId;
     }

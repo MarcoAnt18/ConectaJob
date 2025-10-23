@@ -2,6 +2,7 @@ package com.grupo6.ConectaJob.Controller.NovosRegistros;
 
 import com.grupo6.ConectaJob.Model.DTO.createEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.criarVagaDTO;
+import com.grupo6.ConectaJob.Service.VagaService;
 import com.grupo6.ConectaJob.Service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,9 @@ public class novosRegistrosController {
     @Autowired
     private EmpresaService empresaService;
 
+    @Autowired
+    private VagaService vagaService;
+
     @PostMapping("/criarEmpresa")
     public boolean criarEmpresa (@RequestBody createEmpresaDTO createEmpresaDTO){
         empresaService.createEmpresa(createEmpresaDTO);
@@ -23,7 +27,7 @@ public class novosRegistrosController {
 
     @PostMapping("/criarVaga")
     public boolean criarVaga (@RequestBody criarVagaDTO criarVagaDTO){
-        empresaService.createVaga(criarVagaDTO);
+        vagaService.createVaga(criarVagaDTO);
         return true;
     }
 
