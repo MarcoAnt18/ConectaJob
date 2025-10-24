@@ -1,9 +1,9 @@
 package com.grupo6.ConectaJob.Service;
 
-import com.grupo6.ConectaJob.Model.DTO.searchVaga;
 import com.grupo6.ConectaJob.Service.AIService.ContratoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserTrabalhadorService {
@@ -11,8 +11,8 @@ public class UserTrabalhadorService {
     @Autowired
     private ContratoService contratoService;
 
-    String verificarContrato(searchVaga searchVaga) throws Exception{
-        return contratoService.getRespostaIA(searchVaga);
+    public String verificarContrato(MultipartFile contrato, String nomeVaga, String empresaResponsavelCNPJ) throws Exception{
+        return contratoService.verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ);
     }
 
 }

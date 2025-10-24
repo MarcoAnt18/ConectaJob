@@ -16,7 +16,7 @@ public class OpenAIChatServiceInterface implements AIChatServiceInterface {
     String templateVagaParaAnalisar = "Gostaria que você analisasse uma vaga de trabalho"  +
             "e verificasse se esta de acordo com as leis trabalhistas. Diva em tópicos os problemas encontrados. " +
             "Em caso de alguma irregularidade, cite o está faltando ou como deveria ser " +
-            "Envie apenas os tópicos na resposta. Queria que ignorasse empresaReponsavelCNPJ e  numeroDeVagasAbertas" +
+            "Envie apenas os tópicos na resposta. Queria que ignorasse empresaReponsavelCNPJ e numeroDeVagasAbertas" +
             "Essa é a vaga: ";
 
 

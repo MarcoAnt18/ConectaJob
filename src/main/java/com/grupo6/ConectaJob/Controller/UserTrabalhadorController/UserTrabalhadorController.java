@@ -1,12 +1,11 @@
 package com.grupo6.ConectaJob.Controller.UserTrabalhadorController;
 
-import com.grupo6.ConectaJob.Model.DTO.searchVaga;
-import com.grupo6.ConectaJob.Service.AIService.ContratoService;
+
+import com.grupo6.ConectaJob.Service.EmpresaService;
+import com.grupo6.ConectaJob.Service.UserTrabalhadorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -14,10 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserTrabalhadorController {
 
     @Autowired
-    private ContratoService contratoService;
+    private UserTrabalhadorService userTrabalhadorService;
 
     @GetMapping("/VerificarContrato")
-    public String verificarContrato(@RequestBody searchVaga searchVaga) throws Exception{
-        return contratoService.getRespostaIA(searchVaga);
+    public String verificarContrato(
+            @RequestParam("file") MultipartFile contrato,
+            @RequestParam("nomeVaga") String nomeVaga,
+            @RequestParam("empresaResponsavelCNPJ") String empresaResponsavelCNPJ
+    ) throws Exception{
+        return userTrabalhadorService.verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ);
     }
+
 }
