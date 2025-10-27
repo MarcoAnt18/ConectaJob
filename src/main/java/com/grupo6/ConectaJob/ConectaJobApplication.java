@@ -9,5 +9,4 @@ public class ConectaJobApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ConectaJobApplication.class, args);
 	}
-
 }
