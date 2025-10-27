@@ -2,6 +2,7 @@ package com.grupo6.ConectaJob.Service.AIService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
+import com.grupo6.ConectaJob.Model.DTO.ConferirVaga.retornoConferirVaga;
 import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
 import com.grupo6.ConectaJob.Service.VagaService;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -25,7 +26,7 @@ public class ContratoService {
         this.chatService = aiChatServiceInterface;
     }
 
-    public String verificarContrato(MultipartFile contrato, String nomeVaga, String empresaResponsavelCNPJ) throws Exception{
+    public retornoConferirVaga verificarContrato(MultipartFile contrato, String nomeVaga, String empresaResponsavelCNPJ) throws Exception{
         vagaTrabalho vagaProcurada = vagaService.buscarVagaTrabalho(nomeVaga, empresaResponsavelCNPJ);
 
         if(vagaProcurada == null){
@@ -34,10 +35,9 @@ public class ContratoService {
 
         String vagaParaAnalisar = converterClasseParaJson(vagaProcurada);
 
-        String contratoString = converterContratoParaString(contrato);
+        String contratoParaAnalisar = converterContratoParaString(contrato);
 
-        //return chatService.conferirVaga(vagaParaAnalisar);
-        return "ok";
+        return chatService.conferirVaga(contratoParaAnalisar ,vagaParaAnalisar);
     }
 
     public String converterClasseParaJson(vagaTrabalho vagaParaConverter) throws Exception{

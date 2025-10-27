@@ -1,9 +1,11 @@
 package com.grupo6.ConectaJob.Controller.UserTrabalhadorController;
 
 
+import com.grupo6.ConectaJob.Model.DTO.ConferirVaga.retornoConferirVaga;
 import com.grupo6.ConectaJob.Service.EmpresaService;
 import com.grupo6.ConectaJob.Service.UserTrabalhadorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,12 +18,12 @@ public class UserTrabalhadorController {
     private UserTrabalhadorService userTrabalhadorService;
 
     @GetMapping("/VerificarContrato")
-    public String verificarContrato(
+    public ResponseEntity<retornoConferirVaga> verificarContrato(
             @RequestParam("file") MultipartFile contrato,
             @RequestParam("nomeVaga") String nomeVaga,
             @RequestParam("empresaResponsavelCNPJ") String empresaResponsavelCNPJ
     ) throws Exception{
-        return userTrabalhadorService.verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ);
+        return ResponseEntity.ok(userTrabalhadorService.verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ));
     }
 
 }
