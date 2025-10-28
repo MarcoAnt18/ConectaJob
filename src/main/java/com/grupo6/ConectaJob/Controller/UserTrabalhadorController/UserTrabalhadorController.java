@@ -20,9 +20,6 @@ public class UserTrabalhadorController {
     @Autowired
     private UserTrabalhadorService userTrabalhadorService;
 
-    @Autowired
-    JornadaDeTrabalhoService jornadaDeTrabalhoService;
-
     @GetMapping("/VerificarContrato")
     public ResponseEntity<retornoConferirVaga> verificarContrato(
             @RequestParam("file") MultipartFile contrato,
@@ -34,22 +31,12 @@ public class UserTrabalhadorController {
 
     @PostMapping("/marcarSaida")
     public boolean marcarSaida(@RequestBody MarcarPontoDTO marcarPontoDTO){
-        jornadaDeTrabalhoService.marcarSaida(
-                marcarPontoDTO.trabalhadorCPF(),
-                marcarPontoDTO.empresaResponsavelCPNJ(),
-                marcarPontoDTO.nomeVaga()
-        );
+        userTrabalhadorService.marcarSaida(marcarPontoDTO);
         return true;
     }
 
     @GetMapping("/buscarJornada")
     public ResponseEntity<RetornarJornadaDeTrabalhoDTO> buscarJornadaDeTrabalho(@RequestBody BuscarJornadaDTO buscarJornadaDTO){
-        return ResponseEntity.ok(
-                jornadaDeTrabalhoService.lerJornadaDeTrabalho(
-                    buscarJornadaDTO.trabalhadorCPF(),
-                    buscarJornadaDTO.empresaResponsavelCPNJ(),
-                    buscarJornadaDTO.nomeVaga()
-                )
-        );
+        return ResponseEntity.ok(userTrabalhadorService.buscarJornadaDeTrabalho(buscarJornadaDTO));
     }
 }

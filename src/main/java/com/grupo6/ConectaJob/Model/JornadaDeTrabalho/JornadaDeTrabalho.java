@@ -34,9 +34,9 @@ public class JornadaDeTrabalho {
     public boolean marcarEntrada(){
         RegistroPonto pontoAtual = procurarPontoAtual();
 
-        /*if(pontoAtual != null){
+        if(pontoAtual != null){
             return false;
-        }*/
+        }
 
         //Adiciona o ponto
         RegistroPonto ponto = new RegistroPonto();

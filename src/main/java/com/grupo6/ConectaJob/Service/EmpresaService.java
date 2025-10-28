@@ -3,6 +3,9 @@ package com.grupo6.ConectaJob.Service;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.DuplicateEntityException;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.DTO.*;
+import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
+import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
 import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.userEmpresa.empresa;
@@ -20,8 +23,12 @@ import java.util.Objects;
 public class EmpresaService {
     @Autowired
     private UserGenericRepository UserGenericRepository;
+
     @Autowired
     private EmpresaRepository empresaRepository;
+
+    @Autowired
+    JornadaDeTrabalhoService jornadaDeTrabalhoService;
 
     //-----------------------------------------------------
     //APAGAR DEPOIS, SUBISTITUIR POR SERVICE DE VAGA
@@ -106,6 +113,21 @@ public class EmpresaService {
         return true;
     }
 
+    public void marcarEntrada(MarcarPontoDTO marcarPontoDTO){
+        jornadaDeTrabalhoService.marcarEntrada(
+                marcarPontoDTO.trabalhadorCPF(),
+                marcarPontoDTO.empresaResponsavelCPNJ(),
+                marcarPontoDTO.nomeVaga()
+        );
+    }
+
+    public RetornarJornadaDeTrabalhoDTO buscarJornadaDeTrabalho(BuscarJornadaDTO buscarJornadaDTO){
+        return jornadaDeTrabalhoService.lerJornadaDeTrabalho(
+                buscarJornadaDTO.trabalhadorCPF(),
+                buscarJornadaDTO.empresaResponsavelCPNJ(),
+                buscarJornadaDTO.nomeVaga()
+        );
+    }
 
     public boolean apagarNotificacao(String nomeUsuario, String nomeVaga, String empresaCNPJ){
 
