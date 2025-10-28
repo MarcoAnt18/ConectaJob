@@ -14,7 +14,7 @@ public class RegistroPonto {
 
     public RegistroPonto(){
         this.data = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
-        this.horaEntrada = LocalTime.now(ZoneId.of("America/Sao_Paulo"));
+        this.horaEntrada = LocalTime.now(ZoneId.of("America/Sao_Paulo")).withNano(0);
         this.horaSaida = null;
     }
 
@@ -43,6 +43,6 @@ public class RegistroPonto {
     }
 
     public void marcarSaida(){
-        this.horaSaida = LocalTime.now(ZoneId.of("America/Sao_Paulo"));
+        this.horaSaida = LocalTime.now(ZoneId.of("America/Sao_Paulo")).withNano(0);
     }
 }

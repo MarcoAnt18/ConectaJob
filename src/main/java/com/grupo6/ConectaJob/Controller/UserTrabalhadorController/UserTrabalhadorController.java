@@ -2,7 +2,10 @@ package com.grupo6.ConectaJob.Controller.UserTrabalhadorController;
 
 
 import com.grupo6.ConectaJob.Model.DTO.ConferirVaga.retornoConferirVaga;
-import com.grupo6.ConectaJob.Service.EmpresaService;
+import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
+import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
+import com.grupo6.ConectaJob.Service.JornadaDeTrabalhoService;
 import com.grupo6.ConectaJob.Service.UserTrabalhadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,9 @@ public class UserTrabalhadorController {
     @Autowired
     private UserTrabalhadorService userTrabalhadorService;
 
+    @Autowired
+    JornadaDeTrabalhoService jornadaDeTrabalhoService;
+
     @GetMapping("/VerificarContrato")
     public ResponseEntity<retornoConferirVaga> verificarContrato(
             @RequestParam("file") MultipartFile contrato,
@@ -26,4 +32,24 @@ public class UserTrabalhadorController {
         return ResponseEntity.ok(userTrabalhadorService.verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ));
     }
 
+    @PostMapping("/marcarSaida")
+    public boolean marcarSaida(@RequestBody MarcarPontoDTO marcarPontoDTO){
+        jornadaDeTrabalhoService.marcarSaida(
+                marcarPontoDTO.trabalhadorCPF(),
+                marcarPontoDTO.empresaResponsavelCPNJ(),
+                marcarPontoDTO.nomeVaga()
+        );
+        return true;
+    }
+
+    @GetMapping("/buscarJornada")
+    public ResponseEntity<RetornarJornadaDeTrabalhoDTO> buscarJornadaDeTrabalho(@RequestBody BuscarJornadaDTO buscarJornadaDTO){
+        return ResponseEntity.ok(
+                jornadaDeTrabalhoService.lerJornadaDeTrabalho(
+                    buscarJornadaDTO.trabalhadorCPF(),
+                    buscarJornadaDTO.empresaResponsavelCPNJ(),
+                    buscarJornadaDTO.nomeVaga()
+                )
+        );
+    }
 }

@@ -50,7 +50,7 @@ public class EmpresaService {
         var empresaRequerida = empresaRepository.findEmpresaByCNPJ(cnpj);
 
         if (empresaRequerida == null){
-            throw new notFound("Não existe empresa com CNPJ neste site !");
+            throw new notFound("Empresa com este CNPJ no site não encontrado");
         }
 
         System.out.println(empresaRequerida);
