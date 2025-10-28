@@ -26,8 +26,6 @@ public class vagaTrabalho {
     private int numeroDeVagasAbertas;
 
 
-
-
     public vagaTrabalho(String empresaReponsavelCNPJ, servicoPrestado servicoPrestadoNaOcasiao,
         cargo cargoIndividuo, intervaloTempo jornadaAmpla, intervaloTempoSalvosubCategorias jornandaDetalhada,
         int numeroDeVagasAbertas, String pagamento, String meioDeComunicacao, String equipamentoDeSeguranca) {
@@ -45,6 +43,7 @@ public class vagaTrabalho {
 
     public vagaTrabalho() {
     }
+
 
     public String getVagaId() {
         return vagaId;
