@@ -92,6 +92,10 @@ public class NotificacaoService {
     public RetornoNotificacaoDTO buscarNotificacoes(searchDTO searchDTO){
         var empresaResponsavel = buscarEmpresa(searchDTO.cnpj());
 
+        if(empresaResponsavel.getNotificacoes().isEmpty()){
+            throw new notFound("A empresa não possui notificações");
+        }
+
         return new RetornoNotificacaoDTO(empresaResponsavel.getNotificacoes());
     }
 
