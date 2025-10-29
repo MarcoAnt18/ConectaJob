@@ -5,6 +5,9 @@ import com.grupo6.ConectaJob.Model.DTO.ConferirVaga.retornoConferirVaga;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.RetornoNotificacaoDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.criarNotificacaoDTO;
+import com.grupo6.ConectaJob.Model.DTO.searchDTO;
 import com.grupo6.ConectaJob.Service.UserTrabalhadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +40,11 @@ public class UserTrabalhadorController {
     @GetMapping("/buscarJornada")
     public ResponseEntity<RetornarJornadaDeTrabalhoDTO> buscarJornadaDeTrabalho(@RequestBody BuscarJornadaDTO buscarJornadaDTO){
         return ResponseEntity.ok(userTrabalhadorService.buscarJornadaDeTrabalho(buscarJornadaDTO));
+    }
+
+    @PostMapping("/aplicarVaga")
+    public boolean aplicarParaVaga(@RequestBody criarNotificacaoDTO criarNotificacaoDTO){
+        userTrabalhadorService.aplicarParaVaga(criarNotificacaoDTO);
+        return true;
     }
 }

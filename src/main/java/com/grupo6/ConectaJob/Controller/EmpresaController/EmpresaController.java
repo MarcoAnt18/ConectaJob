@@ -3,11 +3,15 @@ package com.grupo6.ConectaJob.Controller.EmpresaController;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.RetornoNotificacaoDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.criarNotificacaoDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.createEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.editEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.retornoEmpresaExiste;
 import com.grupo6.ConectaJob.Model.DTO.searchDTO;
 import com.grupo6.ConectaJob.Service.EmpresaService;
+import com.grupo6.ConectaJob.Service.NotificacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,5 +54,16 @@ public class EmpresaController {
     @GetMapping("/buscarJornada")
     public ResponseEntity<RetornarJornadaDeTrabalhoDTO> buscarJornadaDeTrabalho(@RequestBody BuscarJornadaDTO buscarJornadaDTO){
         return ResponseEntity.ok(empresaService.buscarJornadaDeTrabalho(buscarJornadaDTO));
+    }
+
+    @GetMapping("buscarNotificacoes")
+    public ResponseEntity<RetornoNotificacaoDTO> buscarNotificacoes(@RequestBody searchDTO searchCNPJ){
+        return ResponseEntity.ok(empresaService.buscarNotificacoes(searchCNPJ));
+    }
+
+    @DeleteMapping("/deletarNotificacao")
+    public boolean deletarNotificacao (@RequestBody deletarNotifcacaoDTO deletarNotifcacaoDTO){
+        empresaService.deletarNotificacao(deletarNotifcacaoDTO);
+        return true;
     }
 }

@@ -1,16 +1,17 @@
 package com.grupo6.ConectaJob.Service;
 
-import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.DuplicateEntityException;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.DTO.*;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.RetornoNotificacaoDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.criarNotificacaoDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.userEmpresa.empresa;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
-import com.grupo6.ConectaJob.Model.userGeneric.userGeneric;
 import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class EmpresaService {
 
     @Autowired
     JornadaDeTrabalhoService jornadaDeTrabalhoService;
+
+    @Autowired
+    NotificacaoService notificacaoService;
 
     //-----------------------------------------------------
     //APAGAR DEPOIS, SUBISTITUIR POR SERVICE DE VAGA
@@ -129,35 +133,11 @@ public class EmpresaService {
         );
     }
 
-    public boolean apagarNotificacao(String nomeUsuario, String nomeVaga, String empresaCNPJ){
-
-        var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(empresaCNPJ);
-
-        if (empresaResponsavel == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
-        }
-
-        List<Notificacao> notificacoes = empresaResponsavel.getNotificacoes();
-
-        for(Notificacao notificacao : notificacoes){
-            if(Objects.equals(notificacao.getUsuario().getNome(), nomeUsuario) && Objects.equals(notificacao.getVagaTrabalho().getCargoIndividuo().getNomeCargo(), nomeVaga)){
-                empresaResponsavel.deleteNotificacao(notificacao);
-                break;
-            }
-        }
-
-        empresaRepository.save(empresaResponsavel);
-
-        return true;
+    public RetornoNotificacaoDTO buscarNotificacoes(searchDTO searchCNPJ){
+        return notificacaoService.buscarNotificacoes(searchCNPJ);
     }
 
-    public List<Notificacao> buscarNOtificacoes(searchDTO searchDTO){
-        var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(searchDTO.cnpj());
-
-        if (empresaResponsavel == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
-        }
-
-        return empresaResponsavel.getNotificacoes();
+    public boolean deletarNotificacao(deletarNotifcacaoDTO deletarNotifcacaoDTO){
+        return notificacaoService.deletarNotificacao(deletarNotifcacaoDTO);
     }
 }

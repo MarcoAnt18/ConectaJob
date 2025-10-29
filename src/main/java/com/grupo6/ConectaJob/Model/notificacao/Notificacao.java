@@ -11,15 +11,15 @@ import lombok.Setter;
 @Setter
 @Builder
 public class Notificacao {
-    private userGeneric usuario;
+    private NotificacaoUsuarioInfo usuarioInfos;
     private String contatoUsuario;
     private String acao;
-    private vagaTrabalho vagaTrabalho;
+    private NotificacaoVagaInfo vagaTrabalhoInfos;
 
-    public Notificacao(userGeneric usuario, String contatoUsuario, String acao, vagaTrabalho vagaTrabalho){
-        this.usuario = usuario;
+    public Notificacao(NotificacaoUsuarioInfo usuarioInfos, String contatoUsuario, String acao, NotificacaoVagaInfo vagaTrabalhoInfos){
+        this.usuarioInfos = usuarioInfos;
         this.contatoUsuario = contatoUsuario;
         this.acao = acao;
-        this.vagaTrabalho = vagaTrabalho;
+        this.vagaTrabalhoInfos = vagaTrabalhoInfos;
     }
 }

@@ -86,6 +86,10 @@ public class userGeneric implements UserDetails {
         return senha;
     }
 
+    public LocalDate getDtNascimento(){
+        return this.dtNascimento;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -100,5 +104,9 @@ public class userGeneric implements UserDetails {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public void setDtNascimento(LocalDate dtNascimento){
+        this.dtNascimento = dtNascimento;
     }
 }

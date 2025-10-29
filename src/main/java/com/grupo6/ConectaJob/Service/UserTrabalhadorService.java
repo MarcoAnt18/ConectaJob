@@ -4,6 +4,7 @@ import com.grupo6.ConectaJob.Model.DTO.ConferirVaga.retornoConferirVaga;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
+import com.grupo6.ConectaJob.Model.DTO.Notificacao.criarNotificacaoDTO;
 import com.grupo6.ConectaJob.Service.AIService.ContratoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class UserTrabalhadorService {
 
     @Autowired
     JornadaDeTrabalhoService jornadaDeTrabalhoService;
+
+    @Autowired
+    NotificacaoService notificacaoService;
 
     public retornoConferirVaga verificarContrato(MultipartFile contrato, String nomeVaga, String empresaResponsavelCNPJ){
         return contratoService.verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ);
@@ -36,5 +40,9 @@ public class UserTrabalhadorService {
                 buscarJornadaDTO.empresaResponsavelCPNJ(),
                 buscarJornadaDTO.nomeVaga()
         );
+    }
+
+    public boolean aplicarParaVaga(criarNotificacaoDTO criarNotificacaoDTO){
+        return notificacaoService.aplicarParaVaga(criarNotificacaoDTO);
     }
 }

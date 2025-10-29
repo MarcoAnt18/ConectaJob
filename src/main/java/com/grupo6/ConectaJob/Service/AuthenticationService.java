@@ -55,35 +55,4 @@ public class AuthenticationService {
 
         UserGenericRepository.save(newTrabalhador);
     }
-
-    //O correto é o usuário também ter a variável de contato, adicionar no userGeneric depois.
-    /*@PostMapping("/aplicarVaga")
-    public boolean aplicarParaVaga(@RequestBody criarNotificacaoDTO criarNotificacaoDTO){
-
-        var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(criarNotificacaoDTO.empresaResponsavelCPNJ());
-
-        if (empresaResponsavel == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
-        }
-
-         var usuarioResponsavel = UserGenericRepository.findUserGenericByCpf(criarNotificacaoDTO.usuarioCPF());
-
-
-        var vagaEscolhida = empresaService.buscarVagaTrabalho(criarNotificacaoDTO.nomeVaga(), criarNotificacaoDTO.empresaResponsavelCPNJ());
-
-        if (vagaEscolhida == null){
-            throw new notFound("Vaga com esse nome não encontrada na empresa");
-        }
-
-        Notificacao novaNotificacao = new Notificacao(usuarioResponsavel,
-                                                      criarNotificacaoDTO.contato(),
-                                                 "Aplicação para vaga",
-                                                      vagaEscolhida);
-
-        empresaResponsavel.setNotificacoes(novaNotificacao);
-
-        empresaRepository.save(empresaResponsavel);
-
-        return true;
-    }*/
 }
