@@ -34,11 +34,8 @@ public class EmpresaService {
     @Autowired
     NotificacaoService notificacaoService;
 
-    //-----------------------------------------------------
-    //APAGAR DEPOIS, SUBISTITUIR POR SERVICE DE VAGA
     @Autowired
     private vagaRepository vagaRepository;
-    //------------------------------------------------------
 
 
     public boolean createEmpresa (createEmpresaDTO crateEmpresaDTO){
