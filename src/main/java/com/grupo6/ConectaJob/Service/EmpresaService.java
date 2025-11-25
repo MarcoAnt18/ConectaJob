@@ -1,16 +1,15 @@
 package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
+import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
 import com.grupo6.ConectaJob.Model.DTO.*;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.RetornoNotificacaoDTO;
-import com.grupo6.ConectaJob.Model.DTO.Notificacao.criarNotificacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
-import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
-import com.grupo6.ConectaJob.Model.userEmpresa.empresa;
+import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
@@ -38,22 +37,22 @@ public class EmpresaService {
     private vagaRepository vagaRepository;
 
 
-    public boolean createEmpresa (createEmpresaDTO crateEmpresaDTO){
+    /*public boolean createEmpresa (createEmpresaDTO crateEmpresaDTO){
         var representante = UserGenericRepository.findByCpf(crateEmpresaDTO.CPFatrelado());
 
         if (representante == null){
             throw new notFound("Usuario com este CPF no site não encontrado");
         }
 
-        var novaEmpresa = new empresa(crateEmpresaDTO.CPFatrelado(), crateEmpresaDTO.CNPJ(),
+        var novaEmpresa = new Empresa(crateEmpresaDTO.CPFatrelado(), crateEmpresaDTO.CNPJ(),
         crateEmpresaDTO.nomeEmpresa(),crateEmpresaDTO.segmento(), crateEmpresaDTO.servicoPrestadoList(),
         crateEmpresaDTO.meioDeComunicacao());
 
         empresaRepository.save(novaEmpresa);
         return true;
-    }
+    }*/
 
-    public retornoEmpresaExiste buscaEmpresa (String cnpj){
+    /*public retornoEmpresaExiste buscaEmpresa (String cnpj){
 
         var empresaRequerida = empresaRepository.findEmpresaByCNPJ(cnpj);
 
@@ -67,7 +66,7 @@ public class EmpresaService {
                 empresaRequerida.getNomeEmpresa(), empresaRequerida.getSegmento(),
                 empresaRequerida.getFtPerfilLink(),empresaRequerida.getServicoPrestado(),
                 empresaRequerida.getMeioDeComunicacao());
-    }
+    }*/
 
     public boolean editarEmpresa(searchDTO searchCNPJ, createEmpresaDTO novaEmpresa){
 
@@ -77,7 +76,7 @@ public class EmpresaService {
             throw new notFound("Empresa com este CNPJ no site não encontrado");
         }
 
-        var EmpresaEditada = new empresa(
+        /*var EmpresaEditada = new Empresa(
                 (novaEmpresa.CPFatrelado() == null) ? empresaAntiga.getCPFatrelado() : novaEmpresa.CPFatrelado(),
                 (novaEmpresa.CNPJ() == null) ? empresaAntiga.getCNPJ() : novaEmpresa.CNPJ(),
                 (novaEmpresa.nomeEmpresa() == null) ? empresaAntiga.getNomeEmpresa() : novaEmpresa.nomeEmpresa(),
@@ -88,7 +87,7 @@ public class EmpresaService {
 
         EmpresaEditada.setId(empresaAntiga.getId());
 
-        empresaRepository.save(EmpresaEditada);
+        empresaRepository.save(EmpresaEditada);*/
 
         return true;
     }

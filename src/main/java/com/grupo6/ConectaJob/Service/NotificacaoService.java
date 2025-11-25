@@ -9,7 +9,7 @@ import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import com.grupo6.ConectaJob.Model.notificacao.NotificacaoUsuarioInfo;
 import com.grupo6.ConectaJob.Model.notificacao.NotificacaoVagaInfo;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
-import com.grupo6.ConectaJob.Model.userEmpresa.empresa;
+import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import com.grupo6.ConectaJob.Model.userGeneric.userGeneric;
 import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
@@ -33,7 +33,7 @@ public class NotificacaoService {
 
     //Criara Notificação
     public boolean aplicarParaVaga(criarNotificacaoDTO criarNotificacaoDTO){
-        empresa empresaResponsavel = buscarEmpresa(criarNotificacaoDTO.empresaResponsavelCPNJ());
+        Empresa empresaResponsavel = buscarEmpresa(criarNotificacaoDTO.empresaResponsavelCPNJ());
 
         userGeneric usuarioResponsavel = buscarUsuario(criarNotificacaoDTO.usuarioCPF());
 
@@ -53,7 +53,7 @@ public class NotificacaoService {
                 vagaInfos
         );
 
-        empresaResponsavel.setNotificacoes(novaNotificacao);
+        //empresaResponsavel.setNotificacoes(novaNotificacao);
 
         empresaRepository.save(empresaResponsavel);
 
@@ -62,7 +62,7 @@ public class NotificacaoService {
 
     public boolean deletarNotificacao(deletarNotifcacaoDTO deletarNotifcacaoDTO){
 
-        empresa empresaResponsavel = buscarEmpresa(deletarNotifcacaoDTO.empresaCNPJ());
+        Empresa empresaResponsavel = buscarEmpresa(deletarNotifcacaoDTO.empresaCNPJ());
 
         List<Notificacao> notificacoes = empresaResponsavel.getNotificacoes();
 
@@ -82,7 +82,7 @@ public class NotificacaoService {
             throw new notFound("Notificação não encontrada");
         }
 
-        empresaResponsavel.deleteNotificacao(notificacaoParaApagar);
+        //empresaResponsavel.deleteNotificacao(notificacaoParaApagar);
 
         empresaRepository.save(empresaResponsavel);
 
@@ -99,8 +99,8 @@ public class NotificacaoService {
         return new RetornoNotificacaoDTO(empresaResponsavel.getNotificacoes());
     }
 
-    public empresa buscarEmpresa(String empresaResponsavelCNPJ){
-        empresa empresaResponsavel = null;
+    public Empresa buscarEmpresa(String empresaResponsavelCNPJ){
+        Empresa empresaResponsavel = null;
 
         empresaResponsavel = empresaRepository.findEmpresaByCNPJ(empresaResponsavelCNPJ);
 

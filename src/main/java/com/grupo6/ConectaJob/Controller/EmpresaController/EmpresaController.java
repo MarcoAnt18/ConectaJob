@@ -10,6 +10,7 @@ import com.grupo6.ConectaJob.Model.DTO.createEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.editEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.retornoEmpresaExiste;
 import com.grupo6.ConectaJob.Model.DTO.searchDTO;
+import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
 import com.grupo6.ConectaJob.Service.EmpresaService;
 import com.grupo6.ConectaJob.Service.NotificacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,15 @@ public class EmpresaController {
     EmpresaService empresaService;
 
     @PostMapping("/criarEmpresa")
-    public boolean criarEmpresa (@RequestBody createEmpresaDTO createEmpresaDTO){
-        empresaService.createEmpresa(createEmpresaDTO);
+    public boolean criarEmpresa (@RequestBody Empresa empresa){
+        //empresaService.createEmpresa(createEmpresaDTO);
         return true;
     }
 
-    @GetMapping("/buscarEmpresa")
+    /*@GetMapping("/buscarEmpresa")
     public ResponseEntity<retornoEmpresaExiste> ProcurarEmpresasExistentes (@RequestBody searchDTO searchCNPJ){
         return ResponseEntity.ok(empresaService.buscaEmpresa(searchCNPJ.cnpj()));
-    }
+    }*/
 
     @PutMapping("/editarEmpresa")
     public boolean editarEmpresa(@RequestBody editEmpresaDTO editEmpresaDTO){
