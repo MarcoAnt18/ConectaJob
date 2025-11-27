@@ -67,4 +67,13 @@ public class Empresa extends Anunciante {
     public void setAvaliacoesSegundoCargo(listaAvaliacoesSegundoCargo avaliacoesSegundoCargo) {
         this.avaliacoesSegundoCargo = avaliacoesSegundoCargo;
     }
+
+    public void atualizarAtributosEspecificos(Anunciante novoAnunciante){
+        Empresa novaEmpresa = (Empresa) novoAnunciante;
+
+        if (novaEmpresa.getCnpjEmpresa() != null) this.cnpjEmpresa = novaEmpresa.getCnpjEmpresa();
+        if (novaEmpresa.getSegmento() != null) this.segmento = novaEmpresa.getSegmento();
+        if (novaEmpresa.getServicoPrestado() != null) this.servicoPrestado = novaEmpresa.getServicoPrestado();
+        if (novaEmpresa.getAvaliacoesSegundoCargo() != null) this.avaliacoesSegundoCargo = novaEmpresa.getAvaliacoesSegundoCargo();
+    }
 }

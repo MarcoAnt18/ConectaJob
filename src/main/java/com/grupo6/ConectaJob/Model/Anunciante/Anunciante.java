@@ -89,4 +89,22 @@ public class Anunciante {
     }
      */
 
+    public final void atualizarAnunciante(Anunciante novoAnunciante){
+        atualizarAtributosComuns(novoAnunciante);
+        atualizarAtributosEspecificos(novoAnunciante);
+    }
+
+    public void atualizarAtributosComuns(Anunciante novoAnunciante){
+        if (novoAnunciante.getCpfAtrelado() != null) this.cpfAtrelado = novoAnunciante.getCpfAtrelado();
+        if (novoAnunciante.getNomeAnunciante() != null) this.nomeAnunciante = novoAnunciante.getNomeAnunciante();
+        if (novoAnunciante.getNotificacoes() != null) this.notificacoes = novoAnunciante.getNotificacoes();
+        if (novoAnunciante.getMeioDeComunicacao() != null) this.meioDeComunicacao = novoAnunciante.getMeioDeComunicacao();
+        if (novoAnunciante.getFtPerfilLink() != null) this.ftPerfilLink = novoAnunciante.getFtPerfilLink();
+    }
+
+
+    public void atualizarAtributosEspecificos(Anunciante novoAnunciante){
+
+    }
+
 }

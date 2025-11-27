@@ -1,5 +1,8 @@
 package com.grupo6.ConectaJob.Controller.EmpresaController;
 
+import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
+import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
+import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
@@ -25,14 +28,14 @@ public class EmpresaController {
 
     @PostMapping("/criarEmpresa")
     public boolean criarEmpresa (@RequestBody Empresa empresa){
-        //empresaService.createEmpresa(createEmpresaDTO);
+        empresaService.createEmpresa(empresa);
         return true;
     }
 
-    /*@GetMapping("/buscarEmpresa")
-    public ResponseEntity<retornoEmpresaExiste> ProcurarEmpresasExistentes (@RequestBody searchDTO searchCNPJ){
+    @GetMapping("/buscarEmpresa")
+    public ResponseEntity<RetornoAnuncianteDTO> ProcurarEmpresasExistentes (@RequestBody searchDTO searchCNPJ){
         return ResponseEntity.ok(empresaService.buscaEmpresa(searchCNPJ.cnpj()));
-    }*/
+    }
 
     @PutMapping("/editarEmpresa")
     public boolean editarEmpresa(@RequestBody editEmpresaDTO editEmpresaDTO){

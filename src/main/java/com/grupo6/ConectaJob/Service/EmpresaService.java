@@ -2,7 +2,10 @@ package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
+import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
 import com.grupo6.ConectaJob.Model.DTO.*;
+import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
+import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
@@ -12,20 +15,22 @@ import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
-import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Objects;
 
 @Service
 public class EmpresaService {
     @Autowired
     private UserGenericRepository UserGenericRepository;
 
+    //-------------------------------------------------
+    //Tirar depois
     @Autowired
     private EmpresaRepository empresaRepository;
+    //Colocar
+    @Autowired
+    private AnuncianteRepository anuncianteRepository;
+    //--------------------------------------
 
     @Autowired
     JornadaDeTrabalhoService jornadaDeTrabalhoService;
@@ -37,78 +42,69 @@ public class EmpresaService {
     private vagaRepository vagaRepository;
 
 
-    /*public boolean createEmpresa (createEmpresaDTO crateEmpresaDTO){
-        var representante = UserGenericRepository.findByCpf(crateEmpresaDTO.CPFatrelado());
+    public boolean createEmpresa (Anunciante anunciante){
+        var representante = UserGenericRepository.findByCpf(anunciante.getCpfAtrelado());
 
         if (representante == null){
             throw new notFound("Usuario com este CPF no site não encontrado");
         }
 
-        var novaEmpresa = new Empresa(crateEmpresaDTO.CPFatrelado(), crateEmpresaDTO.CNPJ(),
-        crateEmpresaDTO.nomeEmpresa(),crateEmpresaDTO.segmento(), crateEmpresaDTO.servicoPrestadoList(),
-        crateEmpresaDTO.meioDeComunicacao());
-
-        empresaRepository.save(novaEmpresa);
+        anuncianteRepository.save(anunciante);
         return true;
-    }*/
+    }
 
-    /*public retornoEmpresaExiste buscaEmpresa (String cnpj){
+    public RetornoAnuncianteDTO buscaEmpresa (String id){
 
-        var empresaRequerida = empresaRepository.findEmpresaByCNPJ(cnpj);
+        Anunciante anuncianteRequeirdo = anuncianteRepository.findAnuncianteById(id);
 
-        if (empresaRequerida == null){
+        if (anuncianteRequeirdo == null){
             throw new notFound("Empresa com este CNPJ no site não encontrado");
         }
 
-        System.out.println(empresaRequerida);
+        Empresa empresa = (Empresa) anuncianteRequeirdo;
 
-        return new retornoEmpresaExiste(empresaRequerida.getCNPJ(),
-                empresaRequerida.getNomeEmpresa(), empresaRequerida.getSegmento(),
-                empresaRequerida.getFtPerfilLink(),empresaRequerida.getServicoPrestado(),
-                empresaRequerida.getMeioDeComunicacao());
-    }*/
-
-    public boolean editarEmpresa(searchDTO searchCNPJ, createEmpresaDTO novaEmpresa){
-
-        var empresaAntiga = empresaRepository.findEmpresaByCNPJ(searchCNPJ.cnpj());
-
-        if (empresaAntiga == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
-        }
-
-        /*var EmpresaEditada = new Empresa(
-                (novaEmpresa.CPFatrelado() == null) ? empresaAntiga.getCPFatrelado() : novaEmpresa.CPFatrelado(),
-                (novaEmpresa.CNPJ() == null) ? empresaAntiga.getCNPJ() : novaEmpresa.CNPJ(),
-                (novaEmpresa.nomeEmpresa() == null) ? empresaAntiga.getNomeEmpresa() : novaEmpresa.nomeEmpresa(),
-                (novaEmpresa.segmento() == null) ? empresaAntiga.getSegmento() : novaEmpresa.segmento(),
-                (novaEmpresa.servicoPrestadoList() == null) ? empresaAntiga.getServicoPrestado() : novaEmpresa.servicoPrestadoList(),
-                (novaEmpresa.meioDeComunicacao() == null) ? empresaAntiga.getMeioDeComunicacao() : novaEmpresa.meioDeComunicacao()
+        return new RetornoEmpresaDTO(
+                empresa.getNomeAnunciante(), empresa.getMeioDeComunicacao(),
+                empresa.getFtPerfilLink(), empresa.getCnpjEmpresa(),
+                empresa.getSegmento(), empresa.getServicoPrestado(),
+                empresa.getAvaliacoesSegundoCargo()
         );
+    }
 
-        EmpresaEditada.setId(empresaAntiga.getId());
+    public boolean editarEmpresa(searchDTO searchId, Anunciante novoAnunciante){
+        Anunciante anuncianteParaAtualizar = anuncianteRepository.findAnuncianteById(searchId.cnpj());
 
-        empresaRepository.save(EmpresaEditada);*/
+        if (anuncianteParaAtualizar == null){
+            throw new notFound("Anunciante não encontrado");
+        }
+
+        Empresa empresaParaAtualizada = (Empresa) anuncianteParaAtualizar;
+
+        empresaParaAtualizada.atualizarAnunciante(novoAnunciante);
+
+        anuncianteRepository.save(empresaParaAtualizada);
 
         return true;
     }
 
     public boolean deletarEmpresa(searchDTO searchCNPJ){
-        var empresa = empresaRepository.findEmpresaByCNPJ(searchCNPJ.cnpj());
+        var anunciante = anuncianteRepository.findAnuncianteById(searchCNPJ.cnpj());
 
-        if (empresa == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
+        if (anunciante == null){
+            throw new notFound("Empresa com este ID não encontrado");
         }
 
-        //Deleta Vagas da empresa
+        //AJEITAR COM ANUNCIOS DEPOIS
+        /*//Deleta Vagas da empresa
         List<vagaTrabalho> vagas = vagaRepository.findAll();
         for(vagaTrabalho vaga : vagas){
             if(Objects.equals(vaga.getEmpresaReponsavelCNPJ(), searchCNPJ.cnpj())) {
                 vagaRepository.delete(vaga);
             }
-        }
+        }*/
 
-        //Deleta empresa
-        empresaRepository.delete(empresa);
+        //Deleta anunciante
+        anuncianteRepository.delete(anunciante);
 
         return true;
     }
