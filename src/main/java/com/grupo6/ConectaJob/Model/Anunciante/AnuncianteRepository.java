@@ -6,4 +6,5 @@ public interface AnuncianteRepository extends MongoRepository<Anunciante, String
 
     Anunciante findAnuncianteById(String id);
 
+    Anunciante findAnuncianteByCpfAtrelado(String cpf);
 }

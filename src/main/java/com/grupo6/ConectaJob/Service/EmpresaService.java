@@ -3,6 +3,7 @@ package com.grupo6.ConectaJob.Service;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
 import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
+import com.grupo6.ConectaJob.Model.Anunciante.ValidarEntradaAnunciante;
 import com.grupo6.ConectaJob.Model.DTO.*;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoEmpresaDTO;
@@ -13,6 +14,7 @@ import com.grupo6.ConectaJob.Model.DTO.Notificacao.RetornoNotificacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
+import com.grupo6.ConectaJob.Model.userEmpresa.ValidarEntradaEmpresa;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +25,11 @@ public class EmpresaService {
     @Autowired
     private UserGenericRepository UserGenericRepository;
 
-    //-------------------------------------------------
-    //Tirar depois
     @Autowired
-    private EmpresaRepository empresaRepository;
-    //Colocar
+    private ValidarEntradaAnunciante validadorEntrada;
+
     @Autowired
     private AnuncianteRepository anuncianteRepository;
-    //--------------------------------------
 
     @Autowired
     JornadaDeTrabalhoService jornadaDeTrabalhoService;
@@ -43,40 +42,32 @@ public class EmpresaService {
 
 
     public boolean createEmpresa (Anunciante anunciante){
-        var representante = UserGenericRepository.findByCpf(anunciante.getCpfAtrelado());
-
-        if (representante == null){
-            throw new notFound("Usuario com este CPF no site não encontrado");
-        }
+        validadorEntrada.validarAnunciante(anunciante);
 
         anuncianteRepository.save(anunciante);
+
         return true;
     }
 
     public RetornoAnuncianteDTO buscaEmpresa (String id){
 
-        Anunciante anuncianteRequeirdo = anuncianteRepository.findAnuncianteById(id);
-
-        if (anuncianteRequeirdo == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
-        }
+        Anunciante anuncianteRequeirdo = buscarAnuncianteBD(id);
 
         Empresa empresa = (Empresa) anuncianteRequeirdo;
 
         return new RetornoEmpresaDTO(
-                empresa.getNomeAnunciante(), empresa.getMeioDeComunicacao(),
-                empresa.getFtPerfilLink(), empresa.getCnpjEmpresa(),
-                empresa.getSegmento(), empresa.getServicoPrestado(),
+                empresa.getNomeAnunciante(),
+                empresa.getMeioDeComunicacao(),
+                empresa.getFtPerfilLink(),
+                empresa.getCnpjEmpresa(),
+                empresa.getSegmento(),
+                empresa.getServicoPrestado(),
                 empresa.getAvaliacoesSegundoCargo()
         );
     }
 
     public boolean editarEmpresa(searchDTO searchId, Anunciante novoAnunciante){
-        Anunciante anuncianteParaAtualizar = anuncianteRepository.findAnuncianteById(searchId.cnpj());
-
-        if (anuncianteParaAtualizar == null){
-            throw new notFound("Anunciante não encontrado");
-        }
+        Anunciante anuncianteParaAtualizar = buscarAnuncianteBD(searchId.cnpj());
 
         Empresa empresaParaAtualizada = (Empresa) anuncianteParaAtualizar;
 
@@ -88,11 +79,7 @@ public class EmpresaService {
     }
 
     public boolean deletarEmpresa(searchDTO searchCNPJ){
-        var anunciante = anuncianteRepository.findAnuncianteById(searchCNPJ.cnpj());
-
-        if (anunciante == null){
-            throw new notFound("Empresa com este ID não encontrado");
-        }
+        var anunciante = buscarAnuncianteBD(searchCNPJ.cnpj());
 
         //AJEITAR COM ANUNCIOS DEPOIS
         /*//Deleta Vagas da empresa
@@ -107,6 +94,16 @@ public class EmpresaService {
         anuncianteRepository.delete(anunciante);
 
         return true;
+    }
+
+    public Anunciante buscarAnuncianteBD(String id){
+        Anunciante anuncianteBusca = anuncianteRepository.findAnuncianteById(id);
+
+        if (anuncianteBusca == null){
+            throw new notFound("Anunciante não encontrado");
+        }
+
+        return anuncianteBusca;
     }
 
     public void marcarEntrada(MarcarPontoDTO marcarPontoDTO){
