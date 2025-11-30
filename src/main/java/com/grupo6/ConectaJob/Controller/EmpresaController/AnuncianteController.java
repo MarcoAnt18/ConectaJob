@@ -1,73 +1,67 @@
 package com.grupo6.ConectaJob.Controller.EmpresaController;
 
-import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
-import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.RetornoNotificacaoDTO;
-import com.grupo6.ConectaJob.Model.DTO.Notificacao.criarNotificacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
-import com.grupo6.ConectaJob.Model.DTO.createEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.editEmpresaDTO;
-import com.grupo6.ConectaJob.Model.DTO.retornoEmpresaExiste;
 import com.grupo6.ConectaJob.Model.DTO.searchDTO;
 import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
-import com.grupo6.ConectaJob.Service.EmpresaService;
-import com.grupo6.ConectaJob.Service.NotificacaoService;
+import com.grupo6.ConectaJob.Service.AnuncianteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/empresa")
-public class EmpresaController {
+public class AnuncianteController {
     @Autowired
-    EmpresaService empresaService;
+    AnuncianteService anuncianteService;
 
     @PostMapping("/criarEmpresa")
     public boolean criarEmpresa (@RequestBody Empresa empresa){
-        empresaService.createEmpresa(empresa);
+        anuncianteService.createAnunciante(empresa);
         return true;
     }
 
     @GetMapping("/buscarEmpresa")
     public ResponseEntity<RetornoAnuncianteDTO> ProcurarEmpresasExistentes (@RequestBody searchDTO searchId){
-        return ResponseEntity.ok(empresaService.buscaEmpresa(searchId.id()));
+        return ResponseEntity.ok(anuncianteService.buscaAnunciante(searchId.id()));
     }
 
     @PutMapping("/editarEmpresa")
     public boolean editarEmpresa(@RequestBody editEmpresaDTO editEmpresaDTO){
-        empresaService.editarEmpresa(editEmpresaDTO.searchId(), editEmpresaDTO.novaEmpresa());
+        anuncianteService.editarAnunciante(editEmpresaDTO.searchId(), editEmpresaDTO.novaEmpresa());
         return true;
     }
 
     @DeleteMapping("/deletarEmpresa")
     public boolean deletarEmpresa (@RequestBody searchDTO searchId){
-        empresaService.deletarEmpresa(searchId);
+        anuncianteService.deletarAnunciante(searchId);
         return true;
     }
 
     @PostMapping("/marcarEntrada")
     public boolean marcarEntrada(@RequestBody MarcarPontoDTO marcarPontoDTO){
-        empresaService.marcarEntrada(marcarPontoDTO);
+        anuncianteService.marcarEntrada(marcarPontoDTO);
         return true;
     }
 
     @GetMapping("/buscarJornada")
     public ResponseEntity<RetornarJornadaDeTrabalhoDTO> buscarJornadaDeTrabalho(@RequestBody BuscarJornadaDTO buscarJornadaDTO){
-        return ResponseEntity.ok(empresaService.buscarJornadaDeTrabalho(buscarJornadaDTO));
+        return ResponseEntity.ok(anuncianteService.buscarJornadaDeTrabalho(buscarJornadaDTO));
     }
 
     @GetMapping("buscarNotificacoes")
     public ResponseEntity<RetornoNotificacaoDTO> buscarNotificacoes(@RequestBody searchDTO searchCNPJ){
-        return ResponseEntity.ok(empresaService.buscarNotificacoes(searchCNPJ));
+        return ResponseEntity.ok(anuncianteService.buscarNotificacoes(searchCNPJ));
     }
 
     @DeleteMapping("/deletarNotificacao")
     public boolean deletarNotificacao (@RequestBody deletarNotifcacaoDTO deletarNotifcacaoDTO){
-        empresaService.deletarNotificacao(deletarNotifcacaoDTO);
+        anuncianteService.deletarNotificacao(deletarNotifcacaoDTO);
         return true;
     }
 }

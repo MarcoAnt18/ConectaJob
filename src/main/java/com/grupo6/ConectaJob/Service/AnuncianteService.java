@@ -16,9 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmpresaService {
+public class AnuncianteService {
     @Autowired
-    private UserGenericRepository UserGenericRepository;
+    private UserGenericRepository userGenericRepository;
 
     @Autowired
     private ValidarEntradaAnunciante validadorEntrada;
@@ -36,7 +36,7 @@ public class EmpresaService {
     private vagaRepository vagaRepository;
 
 
-    public boolean createEmpresa (Anunciante anunciante){
+    public boolean createAnunciante(Anunciante anunciante){
         validadorEntrada.validarAnunciante(anunciante);
 
         anuncianteRepository.save(anunciante);
@@ -44,7 +44,7 @@ public class EmpresaService {
         return true;
     }
 
-    public RetornoAnuncianteDTO buscaEmpresa (String id){
+    public RetornoAnuncianteDTO buscaAnunciante(String id){
 
         Anunciante anuncianteRequeirdo = buscarAnuncianteBD(id);
 
@@ -53,7 +53,7 @@ public class EmpresaService {
         return criarDTO.CriarRetornoAnuncianteDTO(anuncianteRequeirdo);
     }
 
-    public boolean editarEmpresa(searchDTO searchId, Anunciante novoAnunciante){
+    public boolean editarAnunciante(searchDTO searchId, Anunciante novoAnunciante){
         Anunciante anuncianteParaAtualizar = buscarAnuncianteBD(searchId.id());
 
         StrategyAtualizarAnunciante atualizarAnunciante = new AtualizarEmpresa();
@@ -65,7 +65,7 @@ public class EmpresaService {
         return true;
     }
 
-    public boolean deletarEmpresa(searchDTO searchCNPJ){
+    public boolean deletarAnunciante(searchDTO searchCNPJ){
         var anunciante = buscarAnuncianteBD(searchCNPJ.id());
 
         //AJEITAR COM ANUNCIOS DEPOIS

@@ -1,12 +1,9 @@
 package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ConfgSeguranca.tokenConfig;
-import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
-import com.grupo6.ConectaJob.Model.DTO.Notificacao.criarNotificacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.tokenDTO;
 import com.grupo6.ConectaJob.Model.DTO.createTrabalhadorUserDTO;
 import com.grupo6.ConectaJob.Model.DTO.loginTrabalhadorDTO;
-import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import com.grupo6.ConectaJob.Model.userTrabalhador;
@@ -36,7 +33,7 @@ public class AuthenticationService {
     @Autowired
     private EmpresaRepository empresaRepository;
     @Autowired
-    private EmpresaService empresaService; //TAMBEM PARTE DA NOITFICACAO
+    private AnuncianteService anuncianteService; //TAMBEM PARTE DA NOITFICACAO
 
     @PostMapping()
     public ResponseEntity loginTrabalhador (@RequestBody loginTrabalhadorDTO loginTrabalhadorDTO){
