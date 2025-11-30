@@ -33,19 +33,19 @@ public class EmpresaController {
     }
 
     @GetMapping("/buscarEmpresa")
-    public ResponseEntity<RetornoAnuncianteDTO> ProcurarEmpresasExistentes (@RequestBody searchDTO searchCNPJ){
-        return ResponseEntity.ok(empresaService.buscaEmpresa(searchCNPJ.cnpj()));
+    public ResponseEntity<RetornoAnuncianteDTO> ProcurarEmpresasExistentes (@RequestBody searchDTO searchId){
+        return ResponseEntity.ok(empresaService.buscaEmpresa(searchId.id()));
     }
 
     @PutMapping("/editarEmpresa")
     public boolean editarEmpresa(@RequestBody editEmpresaDTO editEmpresaDTO){
-        empresaService.editarEmpresa(editEmpresaDTO.searchCNPJ(), editEmpresaDTO.novaEmpresa());
+        empresaService.editarEmpresa(editEmpresaDTO.searchId(), editEmpresaDTO.novaEmpresa());
         return true;
     }
 
     @DeleteMapping("/deletarEmpresa")
-    public boolean deletarEmpresa (@RequestBody searchDTO searchCNPJ){
-        empresaService.deletarEmpresa(searchCNPJ);
+    public boolean deletarEmpresa (@RequestBody searchDTO searchId){
+        empresaService.deletarEmpresa(searchId);
         return true;
     }
 

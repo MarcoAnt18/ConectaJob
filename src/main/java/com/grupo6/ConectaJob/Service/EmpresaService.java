@@ -54,7 +54,7 @@ public class EmpresaService {
     }
 
     public boolean editarEmpresa(searchDTO searchId, Anunciante novoAnunciante){
-        Anunciante anuncianteParaAtualizar = buscarAnuncianteBD(searchId.cnpj());
+        Anunciante anuncianteParaAtualizar = buscarAnuncianteBD(searchId.id());
 
         StrategyAtualizarAnunciante atualizarAnunciante = new AtualizarEmpresa();
 
@@ -66,7 +66,7 @@ public class EmpresaService {
     }
 
     public boolean deletarEmpresa(searchDTO searchCNPJ){
-        var anunciante = buscarAnuncianteBD(searchCNPJ.cnpj());
+        var anunciante = buscarAnuncianteBD(searchCNPJ.id());
 
         //AJEITAR COM ANUNCIOS DEPOIS
         /*//Deleta Vagas da empresa
