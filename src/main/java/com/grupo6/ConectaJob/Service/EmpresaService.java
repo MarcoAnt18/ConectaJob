@@ -1,20 +1,15 @@
 package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
-import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
-import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
-import com.grupo6.ConectaJob.Model.Anunciante.ValidarEntradaAnunciante;
+import com.grupo6.ConectaJob.Model.Anunciante.*;
 import com.grupo6.ConectaJob.Model.DTO.*;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
-import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.RetornoNotificacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
-import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
-import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
-import com.grupo6.ConectaJob.Model.userEmpresa.ValidarEntradaEmpresa;
+import com.grupo6.ConectaJob.Model.userEmpresa.*;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,27 +48,19 @@ public class EmpresaService {
 
         Anunciante anuncianteRequeirdo = buscarAnuncianteBD(id);
 
-        Empresa empresa = (Empresa) anuncianteRequeirdo;
+        StrategyRetornoAnuncianteDTO criarDTO = new RetornoEmpresaDTO();
 
-        return new RetornoEmpresaDTO(
-                empresa.getNomeAnunciante(),
-                empresa.getMeioDeComunicacao(),
-                empresa.getFtPerfilLink(),
-                empresa.getCnpjEmpresa(),
-                empresa.getSegmento(),
-                empresa.getServicoPrestado(),
-                empresa.getAvaliacoesSegundoCargo()
-        );
+        return criarDTO.CriarRetornoAnuncianteDTO(anuncianteRequeirdo);
     }
 
     public boolean editarEmpresa(searchDTO searchId, Anunciante novoAnunciante){
         Anunciante anuncianteParaAtualizar = buscarAnuncianteBD(searchId.cnpj());
 
-        Empresa empresaParaAtualizada = (Empresa) anuncianteParaAtualizar;
+        StrategyAtualizarAnunciante atualizarAnunciante = new AtualizarEmpresa();
 
-        empresaParaAtualizada.atualizarAnunciante(novoAnunciante);
+        atualizarAnunciante.atualizar(anuncianteParaAtualizar, novoAnunciante);
 
-        anuncianteRepository.save(empresaParaAtualizada);
+        anuncianteRepository.save(anuncianteParaAtualizar);
 
         return true;
     }
