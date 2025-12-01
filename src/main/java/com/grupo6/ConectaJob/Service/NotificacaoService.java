@@ -37,10 +37,10 @@ public class NotificacaoService {
 
         userGeneric usuarioResponsavel = buscarUsuario(criarNotificacaoDTO.usuarioCPF());
 
-        VagaTrabalho vagaEscolhida = buscarVaga(
+        /*VagaTrabalho vagaEscolhida = buscarVaga(
                 criarNotificacaoDTO.nomeVaga(),
                 criarNotificacaoDTO.empresaResponsavelCPNJ()
-        );
+        );*/
 
         NotificacaoUsuarioInfo usuarioInfos = pegarUsuarioInfos(usuarioResponsavel);
 
@@ -124,7 +124,7 @@ public class NotificacaoService {
         return usuarioInformado;
     }
 
-    public VagaTrabalho buscarVaga(String nomeVaga, String empresaResposavelCNPJ){
+    /*public VagaTrabalho buscarVaga(String nomeVaga, String empresaResposavelCNPJ){
         VagaTrabalho vagaInformada = null;
 
         vagaInformada = anuncioService.buscarAnuncioBD(nomeVaga, empresaResposavelCNPJ);
@@ -134,7 +134,7 @@ public class NotificacaoService {
         }
 
         return vagaInformada;
-    }
+    }*/
 
     public NotificacaoUsuarioInfo pegarUsuarioInfos(userGeneric usuario){
        return new NotificacaoUsuarioInfo(

@@ -1,5 +1,6 @@
 package com.grupo6.ConectaJob.Service;
 
+import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.DuplicateEntityException;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AnuncioService {
@@ -32,21 +34,19 @@ public class AnuncioService {
 
     public boolean createAnuncio(Anuncio anuncio){
         //Vira validação ------------------------------------------------
-        var empresaResponvalel = anuncianteRepository.findAnuncianteById(anuncio.getAnuncianteResponsavelId());
+        var anuncianteResponvalel = anuncianteRepository.findAnuncianteById(anuncio.getAnuncianteResponsavelId());
 
-        if (empresaResponvalel == null){
+        if (anuncianteResponvalel == null){
             throw new notFound("Anunciante Atrelado com este ID não encontrado");
         }
 
         //Verifica se a vaga já foi cadastrada na empresa
+        Anuncio anuncioEncontrado = buscarAnuncioBD(anuncio.getNomeAnuncio(), anuncio.getAnuncianteResponsavelId());
 
-        //vagaTrabalho VagaEncontrada = buscarAnuncioBD(criarVagaDTO.servicoPrestadoNaOcasiao().getNomeServico(),
-        //        criarVagaDTO.empresaReponsavelCNPJ());
-
-        //if(VagaEncontrada != null) {
-        //    throw new DuplicateEntityException("Vaga já cadastrada");
-        //}
-        //-----------------------------------------------------------------
+        if(anuncioEncontrado != null) {
+            throw new DuplicateEntityException("Vaga já cadastrada");
+        }
+        //------------------------------------------------------------------
 
         anuncioRepository.save(anuncio);
         return true;
@@ -79,20 +79,19 @@ public class AnuncioService {
 
     }*/
 
-    //Usado para procurar uma vaga no banco de dados pelo nome da vaga e CNPJ da empresa vinculada
-    public VagaTrabalho buscarAnuncioBD(String nomeVaga, String CNPJ) {
-        List<VagaTrabalho> vagas = vagaRepository.findAll();
-        VagaTrabalho VagaEncontrada = null;
+    //Usado para procurar um anúncio no banco de dados pelo nome do anúncio e ID do anunciante responsável
+    public Anuncio buscarAnuncioBD(String nomeAnuncio, String anuncianteID) {
+        List<Anuncio> anuncios = anuncioRepository.findAll();
 
-        //Percorre as vagas cadastradas buscando pelo nome e CNPJ informado
-        /*for(vagaTrabalho vaga : vagas){
-            if(Objects.equals(vaga.getServicoPrestadoNaOcasiao().getNomeServico(), nomeVaga) &&
-                    Objects.equals(vaga.getEmpresaReponsavelCNPJ(), CNPJ)) {
-                VagaEncontrada = vaga;
+        //Percorre os anúncios cadastrados buscando pelo nome e ID do anunciante informado
+        for(Anuncio anuncio : anuncios){
+            if(Objects.equals(anuncio.getNomeAnuncio(), nomeAnuncio) &&
+               Objects.equals(anuncio.getAnuncianteResponsavelId(), anuncianteID)){
+                return anuncio;
             }
-        }*/
+        }
 
-        return VagaEncontrada;
+        return null;
     }
 
     /*public boolean deletarAnuncio(String nomeVaga, String CNPJ){

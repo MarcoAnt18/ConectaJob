@@ -27,7 +27,9 @@ public class ContratoService {
     }
 
     public retornoConferirVaga verificarContrato(MultipartFile contrato, String nomeVaga, String empresaResponsavelCNPJ){
-        VagaTrabalho vagaProcurada = anuncioService.buscarAnuncioBD(nomeVaga, empresaResponsavelCNPJ);
+
+        //VagaTrabalho vagaProcurada = anuncioService.buscarAnuncioBD(nomeVaga, empresaResponsavelCNPJ);
+        VagaTrabalho vagaProcurada = null; //Apagar e deixar parte comentada acima
 
         if(vagaProcurada == null){
             throw new notFound("Vaga não encontrada");
