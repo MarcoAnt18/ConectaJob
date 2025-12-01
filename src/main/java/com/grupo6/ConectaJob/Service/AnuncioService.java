@@ -5,6 +5,9 @@ import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.AnuncioRepository;
+import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoAnuncioDTO;
+import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoVagaDTO;
+import com.grupo6.ConectaJob.Model.DTO.SearchAnuncioDTO;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
@@ -44,7 +47,7 @@ public class AnuncioService {
         Anuncio anuncioEncontrado = buscarAnuncioBD(anuncio.getNomeAnuncio(), anuncio.getAnuncianteResponsavelId());
 
         if(anuncioEncontrado != null) {
-            throw new DuplicateEntityException("Vaga já cadastrada");
+            throw new DuplicateEntityException("Anuncio já cadastrado");
         }
         //------------------------------------------------------------------
 
@@ -52,35 +55,35 @@ public class AnuncioService {
         return true;
     }
 
-    /*public retornoVagaExistente BuscarAnuncio(searchVaga searchVaga){
+    public RetornoAnuncioDTO BuscarAnuncio(SearchAnuncioDTO searchAnuncio){
+        Anuncio anuncioEncontrado = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(searchVaga.empresaResponsavelCNPJ());
+        VagaTrabalho vagaEncontrada = (VagaTrabalho) anuncioEncontrado;
 
-        if (empresaResponsavel == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
-        }
-
-        vagaTrabalho VagaEncontrada = buscarAnuncioBD(searchVaga.nomeVaga(), searchVaga.empresaResponsavelCNPJ());
-
-        if(VagaEncontrada == null){
-            throw new notFound("Vaga com esse nome não encontrada na empresa");
-        }
-
-        return new retornoVagaExistente(VagaEncontrada.getEmpresaReponsavelCNPJ(),
-                VagaEncontrada.getServicoPrestadoNaOcasiao(),
-                VagaEncontrada.getCargoIndividuo(),
-                VagaEncontrada.getJornadaAmpla(),
-                VagaEncontrada.getJornandaDetalhada(),
-                VagaEncontrada.getNumeroDeVagasAbertas(),
-                VagaEncontrada.getPagamento(),
-                VagaEncontrada.getMeioDeComunicacao(),
-                VagaEncontrada.getEquipamentoDeSeguranca());
-
-
-    }*/
+        return new RetornoVagaDTO(
+                vagaEncontrada.getAnuncianteResponsavelId(),
+                vagaEncontrada.getNomeAnuncio(),
+                vagaEncontrada.getDescricaoAnuncio(),
+                vagaEncontrada.getMeioDeComunicacao(),
+                vagaEncontrada.getPagamento(),
+                vagaEncontrada.getQuantidade(),
+                vagaEncontrada.getCargo(),
+                vagaEncontrada.getEquipamentoDeSeguranca(),
+                vagaEncontrada.getJornadaAmpla(),
+                vagaEncontrada.getJornandaDetalhada()
+        );
+    }
 
     //Usado para procurar um anúncio no banco de dados pelo nome do anúncio e ID do anunciante responsável
     public Anuncio buscarAnuncioBD(String nomeAnuncio, String anuncianteID) {
+        //Verifica se o anunciante
+        var anuncianteResponsavel = anuncianteRepository.findAnuncianteById(anuncianteID);
+
+        if (anuncianteResponsavel == null){
+            throw new notFound("Anunciante com este ID não encontrado");
+        }
+
+        //Procura pelo anúncio
         List<Anuncio> anuncios = anuncioRepository.findAll();
 
         //Percorre os anúncios cadastrados buscando pelo nome e ID do anunciante informado
@@ -91,7 +94,7 @@ public class AnuncioService {
             }
         }
 
-        return null;
+        throw new notFound("Anuncio come esse nome não encontrado no Anunciante");
     }
 
     /*public boolean deletarAnuncio(String nomeVaga, String CNPJ){

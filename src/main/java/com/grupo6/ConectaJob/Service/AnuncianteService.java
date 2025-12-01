@@ -72,7 +72,7 @@ public class AnuncianteService {
     public boolean deletarAnunciante(searchDTO searchCNPJ){
         var anunciante = buscarAnuncianteBD(searchCNPJ.id());
 
-        //Deleta Vagas da empresa
+        //Deleta anúncios do anunciante
         List<Anuncio> anuncios = anuncioRepository.findAll();
         for(Anuncio anuncio : anuncios){
             if(Objects.equals(anuncio.getAnuncianteResponsavelId(), searchCNPJ.id())) {
@@ -80,7 +80,6 @@ public class AnuncianteService {
             }
         }
 
-        //Deleta anunciante
         anuncianteRepository.delete(anunciante);
 
         return true;
