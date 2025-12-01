@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+EmpresaController --> EmpresaService
+EmpresaService --> Empresa
+Empresa --> ServicoPrestado
+Empresa --> listaAvaliacoesSegundoCargo
+listaAvaliacoesSegundoCargo --> Avaliacao
+Empresa --> Notificacao
+
+class EmpresaController{
++ boolean criarEmpresa()
++ procurarEmpresasExistentes()
++ boolean editarEmpresa()
++ boolean deletarEmpresa()
+}
+
+class EmpresaService{
++ boolean createEmpresa()
++ Empresa buscaEmpresa()
++ boolean editarEmpresa()
++ boolean deletarEmpresa()
+}
+
+class Empresa{
+- id : String
+- CPFatrelado : String
+- CNPJ : String
+- nomeEmpresa : String
+- segmento : String
+- ftPerfilLink : String
+- servicoPrestado : List<servicoPrestado>
+- avaliacoesSegundoCargo : listaAvaliacoesSegundoCargo
+- meioDeComunicacao : String
+- notificacoes : List<Notificacao>
+}
+
+class ServicoPrestado{
+- nomeServico : String
+- descricaoDoServico : String
+}
+class listaAvaliacoesSegundoCargo{
+- avaliacoesSegundoCargo : HashMap<String, List<avaliacao>>
+}
+class Avaliacao{
+}
+class Notificacao{
+- usuario : userGeneric
+- contatoUsuario : String
+- acao : String
+- vagaTrabalho : vagaTrabalho
+}
+
+@enduml

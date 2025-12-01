@@ -1,0 +1,69 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+UserTrabalhadorController --> UserTrabalhadorService
+EmpresaController --> EmpresaService
+UserTrabalhadorService --> JornadaDeTrabalhoService
+EmpresaService --> JornadaDeTrabalhoService
+JornadaDeTrabalhoService --> JornadaDeTrabalho
+JornadaDeTrabalho --> RegistroPonto
+
+class EmpresaController{
+    - EmpresaService empresaService
+    + marcarEntrada(marcarPontoDTO) : boolean
+    + buscarJornadaDeTrabalho(buscarJornadaDTO) : RetornarJornadaDeTrabalhoDTO
+}
+
+class EmpresaService{
+    - JornadaDeTrabalhoService jornadaDeTrabalhoService;
+    + marcarEntrada(marcarPontoDTO) : void
+    + buscarJornadaDeTrabalho(buscarJornadaDTO) : RetornarJornadaDeTrabalhoDTO
+}
+
+class UserTrabalhadorController{
+    - UserTrabalhadorService userTrabalhadorService
+    + marcarSaida(marcarPontoDTO) : boolean
+    + buscarJornadaDeTrabalho(buscarJornadaDTO) : RetornarJornadaDeTrabalhoDTO
+}
+
+class UserTrabalhadorService{
+    - JornadaDeTrabalhoService jornadaDeTrabalhoService
+    + marcarSaida(marcarPontoDTO) : void
+    + buscarJornadaDeTrabalho(buscarJornadaDTO) : RetornarJornadaDeTrabalhoDTO
+}
+
+class JornadaDeTrabalhoService{
+    - EmpresaRepository empresaRepository;
+    - UserGenericRepository UserGenericRepository
+    - JornadaDeTrabalhoRepository jornadaDeTrabalhoRepository
+    - VagaService vagaService
+
+    + marcarEntrada(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : void
+    + marcarSaida(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : void
+    + lerJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : RetornarJornadaDeTrabalhoDTO
+    + verificarEntradaJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : void
+    + buscarJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : JornadaDeTrabalho
+}
+
+class JornadaDeTrabalho{
+- String id
+- List<RegistroPonto> registroDePontos
+- String usuarioAtreladoCPF
+- String empresaAtreladaCNPJ
+- String vagaAtrelada
++ marcarEntrada() : boolean
++ marcarSaida() : boolean
+- procurarPontoAtual() : RegistroPonto
+}
+
+class RegistroPonto{
+- LocalDate data
+- LocalTime horaEntrada
+- LocalTime horaSaida
+
++ RegistroPonto()
++ marcarSaida() : void
+}
+
+
+@enduml

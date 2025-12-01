@@ -3,8 +3,8 @@ package com.grupo6.ConectaJob.Service.AIService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.DTO.ConferirVaga.retornoConferirVaga;
-import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
-import com.grupo6.ConectaJob.Service.VagaService;
+import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
+import com.grupo6.ConectaJob.Service.AnuncioService;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class ContratoService {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private VagaService vagaService;
+    private AnuncioService anuncioService;
 
     private final AIChatServiceInterface chatService;
 
@@ -27,7 +27,7 @@ public class ContratoService {
     }
 
     public retornoConferirVaga verificarContrato(MultipartFile contrato, String nomeVaga, String empresaResponsavelCNPJ){
-        vagaTrabalho vagaProcurada = vagaService.buscarVagaTrabalho(nomeVaga, empresaResponsavelCNPJ);
+        VagaTrabalho vagaProcurada = anuncioService.buscarAnuncioBD(nomeVaga, empresaResponsavelCNPJ);
 
         if(vagaProcurada == null){
             throw new notFound("Vaga não encontrada");
@@ -40,7 +40,7 @@ public class ContratoService {
         return chatService.conferirVaga(contratoParaAnalisar ,vagaParaAnalisar);
     }
 
-    public String converterClasseParaJson(vagaTrabalho vagaParaConverter){
+    public String converterClasseParaJson(VagaTrabalho vagaParaConverter){
         try{
             return objectMapper.writeValueAsString(vagaParaConverter);
         } catch (Exception e){

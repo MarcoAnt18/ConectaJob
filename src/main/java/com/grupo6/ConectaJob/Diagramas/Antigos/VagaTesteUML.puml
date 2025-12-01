@@ -1,0 +1,70 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+VagaController --> EmpresaService
+EmpresaService --> VagaTrabalho
+VagaTrabalho --> ServicoPrestado
+VagaTrabalho --> Cargo
+VagaTrabalho --> intervaloTempo
+VagaTrabalho --> intervaloTempoSalvosubCategorias
+intervaloTempoSalvosubCategorias --> intervaloTempo
+intervaloTempoSalvosubCategorias --> intervaloComString
+intervaloComString --> intervaloTempo
+
+class VagaController{
++ boolean criarVaga()
++ ProcurarVagaIndividual()
++ ProcurarVagasExistentes()
++ boolean editarVaga()
++ boolean deletarVaga()
+}
+
+class EmpresaService{
++ boolean createVaga()
++ vagaTrabalho buscarVagaPorNome()
++ vagaTrabalho buscarVagaTrabalho()
++ boolean deleteVaga()
++ boolean editVaga()
++ List<vagaTrabalho> buscaTodasVagas ()
+}
+
+class VagaTrabalho{
+- vagaId : String
+- empresaReponsavelCNPJ : String
+- servicoPrestadoNaOcasiao : ServicoPrestado
+- cargo : Cargo
+- meioDeComunicacao : String
+- equipamentoDeSeguranca: String
+- pagamento : String
+- jornadaAmpla : intervaloTempo
+- jornandaDetalhada : intervaloTempoSalvosubCategorias
+- numeroDeVagasAbertas : int
+}
+
+class ServicoPrestado{
+- nomeServico : String
+- descricaoDoServico : String
+}
+
+class Cargo{
+- nomeCargo : String
+- visaoCargo : String
+}
+
+class intervaloTempo{
+- entrada : LocalTime
+- saida : LocalTime
+}
+
+class intervaloTempoSalvosubCategorias{
+-jornadaCdescanco : List<intervaloTempo>
+- jornadaSubCategorizada : List<intervaloComString>
+}
+
+class intervaloComString{
+- intervaloTempoX : intervaloTempo
+- complemento : String
+}
+
+
+@enduml

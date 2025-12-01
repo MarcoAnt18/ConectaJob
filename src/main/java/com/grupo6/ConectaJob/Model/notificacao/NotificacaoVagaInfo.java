@@ -1,8 +1,8 @@
 package com.grupo6.ConectaJob.Model.notificacao;
 
-import com.grupo6.ConectaJob.Model.TempoSubdivicoes.intervaloTempo;
-import com.grupo6.ConectaJob.Model.TempoSubdivicoes.intervaloTempoSalvosubCategorias;
-import com.grupo6.ConectaJob.Model.cargo.cargo;
+import com.grupo6.ConectaJob.Model.TempoSubdivicoes.IntervaloTempo;
+import com.grupo6.ConectaJob.Model.TempoSubdivicoes.IntervaloTempoSalvosubCategorias;
+import com.grupo6.ConectaJob.Model.cargo.Cargo;
 import com.grupo6.ConectaJob.Model.userEmpresa.servicoPrestado;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,16 +12,16 @@ import lombok.Setter;
 public class NotificacaoVagaInfo {
 
     private servicoPrestado servicoPrestadoNaOcasiao;
-    private cargo cargo;
+    private Cargo cargo;
     private String meioDeComunicacao;
     private String equipamentoDeSeguranca;
     private String pagamento;
-    private intervaloTempo jornadaAmpla;
-    private intervaloTempoSalvosubCategorias jornandaDetalhada;
+    private IntervaloTempo jornadaAmpla;
+    private IntervaloTempoSalvosubCategorias jornandaDetalhada;
 
-    public NotificacaoVagaInfo(servicoPrestado servicoPrestadoNaOcasiao,cargo cargo, String meioDeComunicacao,
-                               String equipamentoDeSeguranca, String pagamento, intervaloTempo jornadaAmpla,
-                               intervaloTempoSalvosubCategorias jornandaDetalhada
+    public NotificacaoVagaInfo(servicoPrestado servicoPrestadoNaOcasiao, Cargo cargo, String meioDeComunicacao,
+                               String equipamentoDeSeguranca, String pagamento, IntervaloTempo jornadaAmpla,
+                               IntervaloTempoSalvosubCategorias jornandaDetalhada
     ){
 
         this.servicoPrestadoNaOcasiao = servicoPrestadoNaOcasiao;

@@ -1,7 +1,5 @@
 package com.grupo6.ConectaJob.Model.notificacao;
 
-import com.grupo6.ConectaJob.Model.userGeneric.userGeneric;
-import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,0 +1,299 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+rectangle "Controller" #LightGray {
+    class EmpresaController{
+    - EmpresaService empresaService
+    + criarEmpresa(createEmpresaDTO) : boolean
+    + procurarEmpresasExistentes(searchCNPJ) : retornoEmpresaExiste
+    + editarEmpresa(editEmpresaDTO) : boolean
+    + deletarEmpresa(searchCNPJ) : boolean
+    + buscarNotificacoes(searchCNPJ) : RetornoNotificacaoDTO
+    + deletarNotificacao(deletarNotifcacaoDTO) : boolean
+    + marcarEntrada(marcarPontoDTO) : boolean
+    + buscarJornadaDeTrabalho(buscarJornadaDTO) : RetornarJornadaDeTrabalhoDTO
+    }
+
+    class VagaController{
+    - VagaService vagaService
+    + criarVaga(criarVagaDTO) : boolean
+    + procurarVagaIndividual(searchVaga) : retornoVagaExistente
+    + buscaTodasVagas() : List<vagaTrabalho>
+    + boolean editarVaga(editVagaDTO) : boolean
+    + deletarVaga(searchVaga) : boolean
+    }
+
+    class UserTrabalhadorController{
+    + verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ) : RetornoConferirVagaDTO
+    + aplicarParaVaga(criarNotificacaoDTO) : boolean
+    + marcarSaida(marcarPontoDTO) : boolean
+    + buscarJornadaDeTrabalho(buscarJornadaDTO) : RetornarJornadaDeTrabalhoDTO
+    }
+
+    class AvaliacaoController{
+    -userTrabalhorService trabalhadorSerivece
+    -AvaliacaoService avaliacaoservice
+
+    +CreateTrabalhador(creatTrabalhadorUserDTO) : boolean
+    +deleteTrabalhador(CPF) : boolean
+    +editTrabalhador(CPF, creatTrabalhadorUserDTO) : boolean
+    +buscarUserTrabalhador(CPF) : creatTrabalhadorUserDTO
+    +criarAvaliacao(createAvaliacaoDTO, returnTrabalhadorDTO) : boolean
+    +deleteAvaliacao(returnTrabalhadorDTO, avaliadorDel) : boolean
+    +buscarAvaliacao(CNPJ) : avaliacao
+    +editAvaliacao(CPF, novaAvaliacaoDTO) : boolean
+    }
+}
+
+rectangle "Service" #LightGray {
+    class EmpresaService {
+    - UserGenericRepository UserGenericRepository
+    - EmpresaRepository empresaRepository
+    - NotificacaoService notificacaoService
+    - VagaRepository vagaRepository
+    - JornadaDeTrabalhoService jornadaDeTrabalhoService;
+    + createEmpresa(crateEmpresaDTO) : boolean
+    + buscaEmpresa (cnpj) : retornoEmpresaExiste
+    + editarEmpresa(searchCNPJ, novaEmpresa) : boolean
+    + deletarEmpresa(searchCNPJ) : boolean
+    + buscarNotificacoes(searchCNPJ) : RetornoNotificacaoDTO
+    + deletarNotificacao(deletarNotifcacaoDTO) : boolean
+    + marcarEntrada(marcarPontoDTO) : void
+    + buscarJornadaDeTrabalho(buscarJornadaDTO) : RetornarJornadaDeTrabalhoDTO
+    }
+
+    class VagaService{
+    - VagaRepository vagaRepository
+    - EmpresaRepository empresaRepository
+    + createVaga (criarVagaDTO) : boolean
+    + BuscarVagaPorNome(searchVaga) : retornoVagaExistente
+    + deletarVaga (nomeVaga, CNPJ) : boolean
+    + editarVaga(searchVaga, novaVagaDTO) : boolean
+    + buscaTodasVagas() : List<vagaTrabalho>
+    + buscarVagaTrabalho(nomeVaga, CNPJ) : vagaTrabalho
+    }
+
+    class UserTrabalhadorService{
+    - userTrabalhadorRepository userTrabalhador
+    - ContratoService contratoService;
+    - NotificacaoService notificacaoService
+    - JornadaDeTrabalhoService jornadaDeTrabalhoService
+    + verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ) : RetornoConferirVagaDTO
+    + aplicarParaVaga(criarNotificacaoDTO) : boolean
+    + marcarSaida(marcarPontoDTO) : void
+    + buscarJornadaDeTrabalho(buscarJornadaDTO) : RetornarJornadaDeTrabalhoDTO
+    + CreateTrabalhador(createTrabalhadorUserDTO) : boolean
+    + deleteTrabalhador(CPF, createTrabalhadorUserDTO) : boolean
+    + editTrabalhador(CPF, createTrabalhadorUserDTO) : boolean
+    + buscarUserTrabalhador(CPF) : createTrabalhadorUserDTO
+    }
+    class ContratoService{
+    - AIChatServiceInterface chatService;
+    + verificarContrato(contrato, nomeVaga, empresaResponsavelCNPJ) : RetornoConferirVagaDTO
+    + converterClasseParaJson(vagaParaConverter) : String
+    + converterContratoParaString(contrato) : String
+    }
+    interface AIChatServiceInterface{
+    conferirVaga(contratoParaAnalisar, vagaParaAnalisar) : RetornoConferirVagaDTO
+    }
+    class OpenAIChatServiceInterface{
+    - ChatClient chatClient;
+    - String templateVagaParaAnalisar
+    + conferirVaga(contrato, vagaParaAnalisar) : RetornoConferirVagaDTO
+    }
+
+    class NotificacaoService {
+    - EmpresaRepository empresaRepository
+    - UserGenericRepository userGenericRepository
+    - VagaService vagaService
+    + aplicarParaVaga(criarNotificacaoDTO) : boolean
+    + deletarNotificacao(deletarNotifcacaoDTO) : boolean
+    + buscarNotificacoes(searchDTO) : RetornoNotificacaoDTO
+    + buscarEmpresa(empresaResponsavelCNPJ) : Empresa
+    + buscarUsuario(usuarioCPF) : UserGeneric
+    + buscarVaga(nomeVaga, empresaResposavelCNPJ) : VagaTrabalho
+    + pegarUsuarioInfos(usuario) : NotificacaoUsuarioInfo
+    + pegarVagaInfos(vaga) : NotificacaoVagaInfo
+    }
+
+    class JornadaDeTrabalhoService{
+        - EmpresaRepository empresaRepository;
+        - UserGenericRepository UserGenericRepository
+        - JornadaDeTrabalhoRepository jornadaDeTrabalhoRepository
+        - VagaService vagaService
+
+        + marcarEntrada(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : void
+        + marcarSaida(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : void
+        + lerJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : RetornarJornadaDeTrabalhoDTO
+        + verificarEntradaJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : void
+        + buscarJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga) : JornadaDeTrabalho
+    }
+
+    class avaliacaoService{
+        -UseravAliacaoRepository avaliacaoRepository
+        -UserTrabalhadorRepository userTrabalhadorRepository
+
+        +criarAvaliacao(createAvaliacaoDTO, returnTrabalhadorDTO) : boolean
+        +deletarAvaliacao(returnTrabalhadorDTO, avaliadorDel) : boolean
+        +buscarAvaliacao(CNPJ) : avaliacao
+        +editAvaliacao(CPF, novaAvaliacaoDTO) : boolean
+    }
+}
+
+rectangle "Model" #LightGray {
+    class Empresa{
+    - id : String
+    - CPFatrelado : String
+    - CNPJ : String
+    - nomeEmpresa : String
+    - segmento : String
+    - ftPerfilLink : String
+    - servicoPrestado : List<servicoPrestado>
+    - avaliacoesSegundoCargo : listaAvaliacoesSegundoCargo
+    - meioDeComunicacao : String
+    - notificacoes : List<Notificacao>
+    }
+    class ServicoPrestado{
+    - nomeServico : String
+    - descricaoDoServico : String
+    }
+    class listaAvaliacoesSegundoCargo{
+    - avaliacoesSegundoCargo : HashMap<String, List<avaliacao>>
+    }
+    class Avaliacao{
+    + id : String
+    + Avaliador: String
+    + Avaliado : String
+    + CNPJAvaliador : String
+    + nota : int
+    + comentario : String
+    }
+    class Notificacao{
+    - NotificacaoUsuarioInfo usuarioInfos
+    - String contatoUsuario
+    - String acao
+    - NotificacaoVagaInfo vagaTrabalhoInfos
+    }
+
+    class VagaTrabalho{
+    - vagaId : String
+    - empresaReponsavelCNPJ : String
+    - servicoPrestadoNaOcasiao : ServicoPrestado
+    - cargo : Cargo
+    - meioDeComunicacao : String
+    - equipamentoDeSeguranca: String
+    - pagamento : String
+    - jornadaAmpla : intervaloTempo
+    - jornandaDetalhada : intervaloTempoSalvosubCategorias
+    - numeroDeVagasAbertas : int
+    }
+    class Cargo{
+    - nomeCargo : String
+    - visaoCargo : String
+    }
+    class intervaloTempo{
+    - entrada : LocalTime
+    - saida : LocalTime
+    }
+    class intervaloTempoSalvosubCategorias{
+    -jornadaCdescanco : List<intervaloTempo>
+    - jornadaSubCategorizada : List<intervaloComString>
+    }
+    class intervaloComString{
+    - intervaloTempoX : intervaloTempo
+    - complemento : String
+    }
+
+    class Notificacao {
+    - NotificacaoUsuarioInfo usuarioInfos
+    - String contatoUsuario
+    - String acao
+    - NotificacaoVagaInfo vagaTrabalhoInfos
+    }
+    class NotificacaoUsuarioInfo {
+    - String cpf
+    - String nome
+    - LocalDate dtNascimento
+    }
+    class NotificacaoVagaInfo {
+    - servicoPrestado servicoPrestadoNaOcasiao
+    - cargo cargo
+    - String meioDeComunicacao
+    - String equipamentoDeSeguranca
+    - String pagamento
+    - intervaloTempo jornadaAmpla
+    - intervaloTempoSalvosubCategorias jornandaDetalhada
+    }
+
+    class JornadaDeTrabalho{
+    - String id
+    - List<RegistroPonto> registroDePontos
+    - String usuarioAtreladoCPF
+    - String empresaAtreladaCNPJ
+    - String vagaAtrelada
+    + marcarEntrada() : boolean
+    + marcarSaida() : boolean
+    - procurarPontoAtual() : RegistroPonto
+    }
+
+    class RegistroPonto{
+    - LocalDate data
+    - LocalTime horaEntrada
+    - LocalTime horaSaida
+
+    + RegistroPonto()
+    + marcarSaida() : void
+    }
+
+    class UserGeneric{
+    - id : String
+    - CPF: String
+    - nome: String
+    - senha : String
+    - dtNascimento: date
+    - ftPerfilLink : String
+    }
+
+    class userTrabalhador{
+    + avaliacao : List<avaliacaoes>
+    }
+}
+
+EmpresaController --> EmpresaService
+EmpresaService --> Empresa
+Empresa --> ServicoPrestado
+Empresa --> listaAvaliacoesSegundoCargo
+listaAvaliacoesSegundoCargo --> Avaliacao
+Empresa --> Notificacao
+
+VagaController --> VagaService
+VagaService --> VagaTrabalho
+VagaTrabalho --> ServicoPrestado
+VagaTrabalho --> Cargo
+VagaTrabalho --> intervaloTempo
+VagaTrabalho --> intervaloTempoSalvosubCategorias
+intervaloTempoSalvosubCategorias --> intervaloTempo
+intervaloTempoSalvosubCategorias --> intervaloComString
+intervaloComString --> intervaloTempo
+
+UserTrabalhadorController --> UserTrabalhadorService
+UserTrabalhadorService --> ContratoService
+ContratoService .> AIChatServiceInterface
+AIChatServiceInterface --|> OpenAIChatServiceInterface
+
+UserTrabalhadorService --> NotificacaoService
+EmpresaService --> NotificacaoService
+NotificacaoService --> Notificacao
+Notificacao --> NotificacaoUsuarioInfo
+Notificacao --> NotificacaoVagaInfo
+NotificacaoService --> Empresa
+
+UserTrabalhadorService --> JornadaDeTrabalhoService
+EmpresaService --> JornadaDeTrabalhoService
+JornadaDeTrabalhoService --> JornadaDeTrabalho
+JornadaDeTrabalho --> RegistroPonto
+
+AvaliacaoController --> avaliacaoService
+AvaliacaoController --> UserTrabalhadorService
+
+@enduml

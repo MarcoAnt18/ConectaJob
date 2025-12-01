@@ -32,10 +32,6 @@ public class AnuncianteService {
     @Autowired
     NotificacaoService notificacaoService;
 
-    @Autowired
-    private vagaRepository vagaRepository;
-
-
     public boolean createAnunciante(Anunciante anunciante){
         validadorEntrada.validarAnunciante(anunciante);
 

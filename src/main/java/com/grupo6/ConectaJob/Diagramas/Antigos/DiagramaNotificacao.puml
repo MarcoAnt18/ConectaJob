@@ -1,0 +1,79 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+UserTrabalhadorController --> UserTrabalhadorService
+EmpresaController --> EmpresaService
+UserTrabalhadorService --> NotificacaoService
+EmpresaService --> NotificacaoService
+NotificacaoService --> Notificacao
+Notificacao --> NotificacaoUsuarioInfo
+Notificacao --> NotificacaoVagaInfo
+NotificacaoService --> Empresa
+
+class EmpresaController{
+- EmpresaService empresaService
++ buscarNotificacoes(searchCNPJ) : RetornoNotificacaoDTO
++ deletarNotificacao(deletarNotifcacaoDTO) : boolean
+}
+
+class UserTrabalhadorController {
+- UserTrabalhadorService userTrabalhadorService
++ aplicarParaVaga(criarNotificacaoDTO) : boolean
+}
+
+class UserTrabalhadorService{
+- NotificacaoService notificacaoService
++ aplicarParaVaga(criarNotificacaoDTO) : boolean
+}
+
+class EmpresaService{
+- NotificacaoService notificacaoService
++ buscarNotificacoes(searchCNPJ) : RetornoNotificacaoDTO
++ deletarNotificacao(deletarNotifcacaoDTO) : boolean
+}
+
+class NotificacaoService {
+- EmpresaRepository empresaRepository
+- UserGenericRepository userGenericRepository
+- VagaService vagaService
++ aplicarParaVaga(criarNotificacaoDTO) : boolean
++ deletarNotificacao(deletarNotifcacaoDTO) : boolean
++ buscarNotificacoes(searchDTO) : RetornoNotificacaoDTO
++ buscarEmpresa(empresaResponsavelCNPJ) : Empresa
++ buscarUsuario(usuarioCPF) : UserGeneric
++ buscarVaga(nomeVaga, empresaResposavelCNPJ) : VagaTrabalho
++ pegarUsuarioInfos(usuario) : NotificacaoUsuarioInfo
++ pegarVagaInfos(vaga) : NotificacaoVagaInfo
+}
+
+class Empresa{
++ setNotificacoes(notificacao) : void
++ deleteNotificacao(notificacao) : void
+}
+
+class Notificacao {
+- NotificacaoUsuarioInfo usuarioInfos
+- String contatoUsuario
+- String acao
+- NotificacaoVagaInfo vagaTrabalhoInfos
+}
+
+class NotificacaoUsuarioInfo {
+- String cpf
+- String nome
+- LocalDate dtNascimento
+}
+
+class NotificacaoVagaInfo {
+- servicoPrestado servicoPrestadoNaOcasiao
+- cargo cargo
+- String meioDeComunicacao
+- String equipamentoDeSeguranca
+- String pagamento
+- intervaloTempo jornadaAmpla
+- intervaloTempoSalvosubCategorias jornandaDetalhada
+}
+
+
+
+@enduml

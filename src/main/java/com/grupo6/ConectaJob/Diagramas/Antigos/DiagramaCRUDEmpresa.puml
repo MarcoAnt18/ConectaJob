@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+EmpresaController --> EmpresaService
+EmpresaService --> Empresa
+Empresa --> ServicoPrestado
+Empresa --> listaAvaliacoesSegundoCargo
+listaAvaliacoesSegundoCargo --> Avaliacao
+Empresa --> Notificacao
+
+class EmpresaController{
+- EmpresaService empresaService
++ criarEmpresa(createEmpresaDTO) : boolean
++ procurarEmpresasExistentes(searchCNPJ) : retornoEmpresaExiste
++ editarEmpresa(editEmpresaDTO) : boolean
++ deletarEmpresa(searchCNPJ) : boolean
+}
+
+class EmpresaService {
+- UserGenericRepository UserGenericRepository
+- EmpresaRepository empresaRepository
+- VagaRepository vagaRepository
+
++ createEmpresa(crateEmpresaDTO) : boolean
++ buscaEmpresa (cnpj) : retornoEmpresaExiste
++ editarEmpresa(searchCNPJ, novaEmpresa) : boolean
++ deletarEmpresa(searchCNPJ) : boolean
+}
+
+class Empresa{
+- id : String
+- CPFatrelado : String
+- CNPJ : String
+- nomeEmpresa : String
+- segmento : String
+- ftPerfilLink : String
+- servicoPrestado : List<servicoPrestado>
+- avaliacoesSegundoCargo : listaAvaliacoesSegundoCargo
+- meioDeComunicacao : String
+- notificacoes : List<Notificacao>
+}
+
+class ServicoPrestado{
+- nomeServico : String
+- descricaoDoServico : String
+}
+
+class listaAvaliacoesSegundoCargo{
+- avaliacoesSegundoCargo : HashMap<String, List<avaliacao>>
+}
+
+class Avaliacao{
+}
+
+class Notificacao{
+- NotificacaoUsuarioInfo usuarioInfos
+- String contatoUsuario
+- String acao
+- NotificacaoVagaInfo vagaTrabalhoInfos
+}
+
+@enduml

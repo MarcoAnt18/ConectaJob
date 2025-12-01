@@ -1,17 +1,13 @@
 package com.grupo6.ConectaJob.Model.TempoSubdivicoes;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class intervaloTempoSalvosubCategorias {
+public class IntervaloTempoSalvosubCategorias {
 
-    private List<intervaloTempo> jornadaCdescanco  = new ArrayList<>();
+    private List<IntervaloTempo> jornadaCdescanco  = new ArrayList<>();
     private List<intervaloComString> jornadaSubCategorizada  = new ArrayList<>();
-    public boolean jornadaCdescancoCreate (intervaloTempo jornandaPreDescanco, intervaloTempo intervaloDescanco, intervaloTempo jornadaPosDesanco){
+    public boolean jornadaCdescancoCreate (IntervaloTempo jornandaPreDescanco, IntervaloTempo intervaloDescanco, IntervaloTempo jornadaPosDesanco){
             jornadaCdescanco.add(jornandaPreDescanco);
             jornadaCdescanco.add(intervaloDescanco);
             jornadaCdescanco.add(jornadaPosDesanco);
@@ -20,13 +16,13 @@ public class intervaloTempoSalvosubCategorias {
     public  List<intervaloComString> jornadaSubCategorizadaCreate (){
         return jornadaSubCategorizada;
     }
-    public intervaloTempoSalvosubCategorias() {}
+    public IntervaloTempoSalvosubCategorias() {}
 
-    public List<intervaloTempo> getJornadaCdescanco() {
+    public List<IntervaloTempo> getJornadaCdescanco() {
         return jornadaCdescanco;
     }
 
-    public void setJornadaCdescanco(List<intervaloTempo> jornadaCdescanco) {
+    public void setJornadaCdescanco(List<IntervaloTempo> jornadaCdescanco) {
         this.jornadaCdescanco = jornadaCdescanco;
     }
 

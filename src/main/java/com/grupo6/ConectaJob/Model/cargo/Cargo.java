@@ -1,16 +1,12 @@
 package com.grupo6.ConectaJob.Model.cargo;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-
-public class cargo {
+public class Cargo {
 
     private String nomeCargo;
     private String visaoCargo;
 
-    public cargo() {}
+    public Cargo() {}
 
     public String getNomeCargo() {
         return nomeCargo;

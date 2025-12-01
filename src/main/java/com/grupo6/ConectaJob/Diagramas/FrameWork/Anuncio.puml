@@ -1,0 +1,75 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+AnuncioController --> AnuncioService
+AnuncioService --> Anuncio
+Anuncio --> AnuncioRepository
+VagaTrabalho --|> Anuncio
+
+VagaTrabalho --> Cargo
+VagaTrabalho --> intervaloTempo
+VagaTrabalho --> intervaloTempoSalvosubCategorias
+intervaloTempoSalvosubCategorias --> intervaloTempo
+intervaloTempoSalvosubCategorias --> intervaloComString
+intervaloComString --> intervaloTempo
+
+class AnuncioController{
+- AnuncioService anuncioService
++ criarAnuncio(criarVagaDTO) : boolean
++ procurarAnuncioIndividual(searchVaga) : retornoVagaExistente
++ buscaTodosAnuncios() : List<vagaTrabalho>
++ boolean editarAnuncio(editVagaDTO) : boolean
++ deletarAnuncio(searchVaga) : boolean
+}
+
+class AnuncioService{
+- AnuncioRepository anuncioRepository
+- AnuncianteRepository anuncianteRepository
++ createAnuncio (criarVagaDTO) : boolean
++ BuscarAnuncioPorNome(searchVaga) : retornoVagaExistente
++ deletarAnuncio (nomeVaga, CNPJ) : boolean
++ editarAnuncio(searchVaga, novaVagaDTO) : boolean
++ buscaTodosAnuncios() : List<vagaTrabalho>
++ buscarAnuncioBD(nomeVaga, CNPJ) : vagaTrabalho
+}
+
+class Anuncio{
+- anuncioID : String
+- anuncioReponsavelId : String
+- nomeAnuncio : String
+- descricaoAnuncio : String
+- meioDeComunicacao : String
+- pagamento : String
+- quantidade : int
+}
+
+class AnuncioRepository{}
+
+
+class VagaTrabalho{
+- cargo : Cargo
+- equipamentoDeSeguranca: String
+- jornadaAmpla : intervaloTempo
+- jornandaDetalhada : intervaloTempoSalvosubCategorias
+}
+
+class Cargo{
+- nomeCargo : String
+- visaoCargo : String
+}
+
+class intervaloTempo{
+- entrada : LocalTime
+- saida : LocalTime
+}
+
+class intervaloTempoSalvosubCategorias{
+-jornadaCdescanco : List<intervaloTempo>
+- jornadaSubCategorizada : List<intervaloComString>
+}
+
+class intervaloComString{
+- intervaloTempoX : intervaloTempo
+- complemento : String
+}
+@enduml

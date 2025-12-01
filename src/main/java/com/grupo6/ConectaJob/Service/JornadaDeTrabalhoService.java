@@ -1,13 +1,11 @@
 package com.grupo6.ConectaJob.Service;
 
-import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.DuplicateEntityException;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.JornadaDeTrabalho.JornadaDeTrabalho;
 import com.grupo6.ConectaJob.Model.JornadaDeTrabalho.JornadaDeTrabalhoRepository;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
-import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +23,10 @@ public class JornadaDeTrabalhoService {
     private JornadaDeTrabalhoRepository jornadaDeTrabalhoRepository;
 
     @Autowired
-    private VagaService vagaService;
+    private AnuncioService anuncioService;
 
     public void marcarEntrada(String trabalhadorCPF, String empresaResponsavelCPNJ, String nomeVaga){
-        verificarEntradaJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga);
+        /*verificarEntradaJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga);
 
         JornadaDeTrabalho jornadaDeTrabalhoProcurada = buscarJornadaDeTrabalho(trabalhadorCPF,empresaResponsavelCPNJ, nomeVaga);
 
@@ -47,12 +45,12 @@ public class JornadaDeTrabalhoService {
             throw new DuplicateEntityException("Ponto já registrado hoje");
         }
 
-        jornadaDeTrabalhoRepository.save(novaJornada);
+        jornadaDeTrabalhoRepository.save(novaJornada);*/
     }
 
     public void marcarSaida(String trabalhadorCPF, String empresaResponsavelCPNJ, String nomeVaga){
 
-        verificarEntradaJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga);
+        /*verificarEntradaJornadaDeTrabalho(trabalhadorCPF, empresaResponsavelCPNJ, nomeVaga);
 
         JornadaDeTrabalho jornadaDeTrabalhoProcurada = buscarJornadaDeTrabalho(trabalhadorCPF,empresaResponsavelCPNJ, nomeVaga);
 
@@ -71,7 +69,7 @@ public class JornadaDeTrabalhoService {
             throw new DuplicateEntityException("Ponto já registrado hoje");
         }
 
-        jornadaDeTrabalhoRepository.save(novaJornada);
+        jornadaDeTrabalhoRepository.save(novaJornada);*/
     }
 
     public RetornarJornadaDeTrabalhoDTO lerJornadaDeTrabalho(String trabalhadorCPF, String empresaResponsavelCPNJ, String nomeVaga){
@@ -86,7 +84,7 @@ public class JornadaDeTrabalhoService {
     }
 
     public void verificarEntradaJornadaDeTrabalho(String trabalahdorCPF, String empresaResponsavelCPNJ, String nomeVaga){
-        var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(empresaResponsavelCPNJ);
+        /*var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(empresaResponsavelCPNJ);
 
         if (empresaResponsavel == null){
             throw new notFound("Empresa com este CNPJ no site não encontrado");
@@ -98,11 +96,11 @@ public class JornadaDeTrabalhoService {
             throw new notFound("Trabalhador com este CPF no site não encontrado");
         }
 
-        vagaTrabalho vagaInformada = vagaService.buscarVagaTrabalho(nomeVaga, empresaResponsavelCPNJ);
+        vagaTrabalho vagaInformada = anuncioService.buscarAnuncioBD(nomeVaga, empresaResponsavelCPNJ);
 
         if(vagaInformada == null){
             throw new notFound("Vaga com esse nome não encontrada na empresa");
-        }
+        }*/
     }
 
     public JornadaDeTrabalho buscarJornadaDeTrabalho(String trabalhadorCPF, String empresaResponsavelCPNJ, String nomeVaga){

@@ -1,17 +1,17 @@
 package com.grupo6.ConectaJob.Model.TempoSubdivicoes;
 
 public class intervaloComString {
-    private intervaloTempo intervaloTempoX;
+    private IntervaloTempo intervaloTempoX;
     private String complemento;
 
     public intervaloComString() {
     }
 
-    public intervaloTempo getIntervaloTempoX() {
+    public IntervaloTempo getIntervaloTempoX() {
         return intervaloTempoX;
     }
 
-    public void setIntervaloTempoX(intervaloTempo intervaloTempoX) {
+    public void setIntervaloTempoX(IntervaloTempo intervaloTempoX) {
         this.intervaloTempoX = intervaloTempoX;
     }
 

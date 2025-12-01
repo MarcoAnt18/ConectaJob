@@ -1,0 +1,71 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+VagaController --> VagaService
+VagaService --> VagaTrabalho
+VagaTrabalho --> ServicoPrestado
+VagaTrabalho --> Cargo
+VagaTrabalho --> intervaloTempo
+VagaTrabalho --> intervaloTempoSalvosubCategorias
+intervaloTempoSalvosubCategorias --> intervaloTempo
+intervaloTempoSalvosubCategorias --> intervaloComString
+intervaloComString --> intervaloTempo
+
+class VagaController{
+- VagaService vagaService
++ criarVaga(criarVagaDTO) : boolean
++ procurarVagaIndividual(searchVaga) : retornoVagaExistente
++ buscaTodasVagas() : List<vagaTrabalho>
++ boolean editarVaga(editVagaDTO) : boolean
++ deletarVaga(searchVaga) : boolean
+}
+
+class VagaService{
+- VagaRepository vagaRepository
+- EmpresaRepository empresaRepository
++ createVaga (criarVagaDTO) : boolean
++ BuscarVagaPorNome(searchVaga) : retornoVagaExistente
++ deletarVaga (nomeVaga, CNPJ) : boolean
++ editarVaga(searchVaga, novaVagaDTO) : boolean
++ buscaTodasVagas() : List<vagaTrabalho>
++ buscarVagaTrabalho(nomeVaga, CNPJ) : vagaTrabalho
+}
+
+class VagaTrabalho{
+- vagaId : String
+- empresaReponsavelCNPJ : String
+- servicoPrestadoNaOcasiao : ServicoPrestado
+- cargo : Cargo
+- meioDeComunicacao : String
+- equipamentoDeSeguranca: String
+- pagamento : String
+- jornadaAmpla : intervaloTempo
+- jornandaDetalhada : intervaloTempoSalvosubCategorias
+- numeroDeVagasAbertas : int
+}
+
+class ServicoPrestado{
+- nomeServico : String
+- descricaoDoServico : String
+}
+
+class Cargo{
+- nomeCargo : String
+- visaoCargo : String
+}
+
+class intervaloTempo{
+- entrada : LocalTime
+- saida : LocalTime
+}
+
+class intervaloTempoSalvosubCategorias{
+-jornadaCdescanco : List<intervaloTempo>
+- jornadaSubCategorizada : List<intervaloComString>
+}
+
+class intervaloComString{
+- intervaloTempoX : intervaloTempo
+- complemento : String
+}
+@enduml

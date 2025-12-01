@@ -12,7 +12,7 @@ import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import com.grupo6.ConectaJob.Model.userGeneric.userGeneric;
-import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
+import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class NotificacaoService {
     UserGenericRepository userGenericRepository;
 
     @Autowired
-    VagaService vagaService;
+    AnuncioService anuncioService;
 
     //Criara Notificação
     public boolean aplicarParaVaga(criarNotificacaoDTO criarNotificacaoDTO){
@@ -37,14 +37,15 @@ public class NotificacaoService {
 
         userGeneric usuarioResponsavel = buscarUsuario(criarNotificacaoDTO.usuarioCPF());
 
-        vagaTrabalho vagaEscolhida = buscarVaga(
+        VagaTrabalho vagaEscolhida = buscarVaga(
                 criarNotificacaoDTO.nomeVaga(),
                 criarNotificacaoDTO.empresaResponsavelCPNJ()
         );
 
         NotificacaoUsuarioInfo usuarioInfos = pegarUsuarioInfos(usuarioResponsavel);
 
-        NotificacaoVagaInfo vagaInfos = pegarVagaInfos(vagaEscolhida);
+        //NotificacaoVagaInfo vagaInfos = pegarVagaInfos(vagaEscolhida);
+        NotificacaoVagaInfo vagaInfos = null; //Retirar depois, e deixar a comentado
 
         Notificacao novaNotificacao = new Notificacao(
                 usuarioInfos,
@@ -123,10 +124,10 @@ public class NotificacaoService {
         return usuarioInformado;
     }
 
-    public vagaTrabalho buscarVaga(String nomeVaga, String empresaResposavelCNPJ){
-        vagaTrabalho vagaInformada = null;
+    public VagaTrabalho buscarVaga(String nomeVaga, String empresaResposavelCNPJ){
+        VagaTrabalho vagaInformada = null;
 
-        vagaInformada = vagaService.buscarVagaTrabalho(nomeVaga, empresaResposavelCNPJ);
+        vagaInformada = anuncioService.buscarAnuncioBD(nomeVaga, empresaResposavelCNPJ);
 
         if (vagaInformada == null){
             throw new notFound("Vaga com esse nome não encontrada na empresa");
@@ -143,7 +144,7 @@ public class NotificacaoService {
                 );
     }
 
-    public NotificacaoVagaInfo pegarVagaInfos(vagaTrabalho vaga){
+    /*public NotificacaoVagaInfo pegarVagaInfos(vagaTrabalho vaga){
         return new NotificacaoVagaInfo(
                 vaga.getServicoPrestadoNaOcasiao(),
                 vaga.getCargoIndividuo(),
@@ -153,5 +154,5 @@ public class NotificacaoService {
                 vaga.getJornadaAmpla(),
                 vaga.getJornandaDetalhada()
         );
-    }
+    }*/
 }

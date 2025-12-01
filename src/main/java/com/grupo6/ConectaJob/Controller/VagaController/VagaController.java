@@ -1,48 +1,41 @@
 package com.grupo6.ConectaJob.Controller.VagaController;
 
-import com.grupo6.ConectaJob.Model.DTO.criarVagaDTO;
-import com.grupo6.ConectaJob.Model.DTO.editVagaDTO;
-import com.grupo6.ConectaJob.Model.DTO.retornoVagaExistente;
-import com.grupo6.ConectaJob.Model.DTO.searchVaga;
-import com.grupo6.ConectaJob.Model.vaga.vagaTrabalho;
-import com.grupo6.ConectaJob.Service.VagaService;
+import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
+import com.grupo6.ConectaJob.Service.AnuncioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/vaga")
 public class VagaController {
     @Autowired
-    private VagaService vagaService;
+    private AnuncioService anuncioService;
 
     @PostMapping("/criarVaga")
-    public boolean criarVaga(@RequestBody criarVagaDTO criarVagaDTO){
-        vagaService.createVaga(criarVagaDTO);
+    public boolean criarVaga(@RequestBody VagaTrabalho vagaTrabalho){
+        anuncioService.createAnuncio(vagaTrabalho);
         return true;
     }
 
-    @GetMapping("/buscarVaga")
+    /*@GetMapping("/buscarVaga")
     public ResponseEntity<retornoVagaExistente> ProcurarVagaIndividual(@RequestBody searchVaga searchVaga){
-        return ResponseEntity.ok(vagaService.BuscarVagaPorNome(searchVaga));
+        return ResponseEntity.ok(anuncioService.BuscarAnuncio(searchVaga));
     }
 
     @GetMapping("/buscarTodasVagas")
     public ResponseEntity<List<vagaTrabalho>> buscaTodasVagas(){
-        return ResponseEntity.ok(vagaService.buscaTodasVagas());
+        return ResponseEntity.ok(anuncioService.buscaTodosAnuncios());
     }
 
     @PutMapping("/editarVaga")
     public boolean editarVaga(@RequestBody editVagaDTO editVagaDTO){
-        vagaService.editarVaga(editVagaDTO.searchVaga(), editVagaDTO.novaVagaDTO());
+        anuncioService.editarAnuncio(editVagaDTO.searchVaga(), editVagaDTO.novaVagaDTO());
         return true;
     }
 
     @DeleteMapping("/deletarVaga")
     public boolean deletarVaga(@RequestBody searchVaga searchVaga){
-        vagaService.deletarVaga(searchVaga.nomeVaga(), searchVaga.empresaResponsavelCNPJ());
+        anuncioService.deletarAnuncio(searchVaga.nomeVaga(), searchVaga.empresaResponsavelCNPJ());
         return true;
-    }
+    }*/
 }

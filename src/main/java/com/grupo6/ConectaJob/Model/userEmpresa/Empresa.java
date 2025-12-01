@@ -19,8 +19,8 @@ public class Empresa extends Anunciante {
     public Empresa(){}
 
     public Empresa(String _cpfAtrelado, String _nomeAnunciante, String _meioDeComunicacao, String _ftPerfilLink,
-                   String _cnpjEmpresa, String segmento, List<servicoPrestado> servicoPrestado
-    ){
+                   String _cnpjEmpresa, String segmento, List<servicoPrestado> servicoPrestado)
+    {
         super(_cpfAtrelado, _nomeAnunciante, _meioDeComunicacao, _ftPerfilLink);
         this.cnpjEmpresa = _cnpjEmpresa;
         this.segmento = segmento;
