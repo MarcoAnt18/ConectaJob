@@ -2,6 +2,8 @@ package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.*;
+import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
+import com.grupo6.ConectaJob.Model.Anuncio.AnuncioRepository;
 import com.grupo6.ConectaJob.Model.DTO.*;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
@@ -14,6 +16,9 @@ import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AnuncianteService {
@@ -28,6 +33,9 @@ public class AnuncianteService {
 
     @Autowired
     JornadaDeTrabalhoService jornadaDeTrabalhoService;
+
+    @Autowired
+    private AnuncioRepository anuncioRepository;
 
     @Autowired
     NotificacaoService notificacaoService;
@@ -64,14 +72,13 @@ public class AnuncianteService {
     public boolean deletarAnunciante(searchDTO searchCNPJ){
         var anunciante = buscarAnuncianteBD(searchCNPJ.id());
 
-        //AJEITAR COM ANUNCIOS DEPOIS
-        /*//Deleta Vagas da empresa
-        List<vagaTrabalho> vagas = vagaRepository.findAll();
-        for(vagaTrabalho vaga : vagas){
-            if(Objects.equals(vaga.getEmpresaReponsavelCNPJ(), searchCNPJ.cnpj())) {
-                vagaRepository.delete(vaga);
+        //Deleta Vagas da empresa
+        List<Anuncio> anuncios = anuncioRepository.findAll();
+        for(Anuncio anuncio : anuncios){
+            if(Objects.equals(anuncio.getAnuncianteResponsavelId(), searchCNPJ.id())) {
+                anuncioRepository.delete(anuncio);
             }
-        }*/
+        }
 
         //Deleta anunciante
         anuncianteRepository.delete(anunciante);
