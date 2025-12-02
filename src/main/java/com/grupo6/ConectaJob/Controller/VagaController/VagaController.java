@@ -1,6 +1,7 @@
 package com.grupo6.ConectaJob.Controller.VagaController;
 
 import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoAnuncioDTO;
+import com.grupo6.ConectaJob.Model.DTO.EditVagaDTO;
 import com.grupo6.ConectaJob.Model.DTO.SearchAnuncioDTO;
 import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
 import com.grupo6.ConectaJob.Service.AnuncioService;
@@ -26,19 +27,19 @@ public class VagaController {
     }
 
     /*@GetMapping("/buscarTodasVagas")
-    public ResponseEntity<List<vagaTrabalho>> buscaTodasVagas(){
+    public ResponseEntity<List<Anuncio>> buscaTodasVagas(){
         return ResponseEntity.ok(anuncioService.buscaTodosAnuncios());
-    }
+    }*/
 
     @PutMapping("/editarVaga")
-    public boolean editarVaga(@RequestBody editVagaDTO editVagaDTO){
-        anuncioService.editarAnuncio(editVagaDTO.searchVaga(), editVagaDTO.novaVagaDTO());
+    public boolean editarAnuncio(@RequestBody EditVagaDTO editVagaDTO){
+        anuncioService.editarAnuncio(editVagaDTO.searchAnuncioDTO(), editVagaDTO.novaVaga());
         return true;
     }
 
     @DeleteMapping("/deletarVaga")
-    public boolean deletarVaga(@RequestBody searchVaga searchVaga){
-        anuncioService.deletarAnuncio(searchVaga.nomeVaga(), searchVaga.empresaResponsavelCNPJ());
+    public boolean deletarVaga(@RequestBody SearchAnuncioDTO searchAnuncio){
+        anuncioService.deletarAnuncio(searchAnuncio.nomeAnuncio(), searchAnuncio.anuncianteResponsavelId());
         return true;
-    }*/
+    }
 }

@@ -60,4 +60,13 @@ public class VagaTrabalho extends Anuncio{
     public void setEquipamentoDeSeguranca(String equipamentoDeSeguranca){
         this.equipamentoDeSeguranca = equipamentoDeSeguranca;
     }
+
+    public void atualizarAtributosEspecificos(Anuncio novoAnuncio){
+        VagaTrabalho novaVaga = (VagaTrabalho) novoAnuncio;
+
+        if (novaVaga.getCargo() != null) this.cargo = novaVaga.getCargo();
+        if (novaVaga.getEquipamentoDeSeguranca() != null) this.equipamentoDeSeguranca = novaVaga.getEquipamentoDeSeguranca();
+        if (novaVaga.getJornadaAmpla() != null) this.jornadaAmpla = novaVaga.getJornadaAmpla();
+        if (novaVaga.getJornandaDetalhada() != null) this.jornandaDetalhada = novaVaga.getJornandaDetalhada();
+    }
 }

@@ -1,5 +1,6 @@
 package com.grupo6.ConectaJob.Service;
 
+import com.grupo6.ConectaJob.Controller.VagaController.VagaController;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.DuplicateEntityException;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
@@ -11,9 +12,11 @@ import com.grupo6.ConectaJob.Model.DTO.SearchAnuncioDTO;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
+import jakarta.validation.OverridesAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,6 +61,7 @@ public class AnuncioService {
     public RetornoAnuncioDTO BuscarAnuncio(SearchAnuncioDTO searchAnuncio){
         Anuncio anuncioEncontrado = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
+        //Strategy----------------------------------------
         VagaTrabalho vagaEncontrada = (VagaTrabalho) anuncioEncontrado;
 
         return new RetornoVagaDTO(
@@ -72,6 +76,7 @@ public class AnuncioService {
                 vagaEncontrada.getJornadaAmpla(),
                 vagaEncontrada.getJornandaDetalhada()
         );
+        //----------------------------------------------------
     }
 
     //Usado para procurar um anúncio no banco de dados pelo nome do anúncio e ID do anunciante responsável
@@ -97,61 +102,41 @@ public class AnuncioService {
         throw new notFound("Anuncio come esse nome não encontrado no Anunciante");
     }
 
-    /*public boolean deletarAnuncio(String nomeVaga, String CNPJ){
-        var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(CNPJ);
+    public boolean deletarAnuncio(String nomeVaga, String anuncianteResponsavelId){
+        Anuncio anuncioEncontrado = buscarAnuncioBD(nomeVaga, anuncianteResponsavelId);
 
-        if (empresaResponsavel == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
-        }
-
-        vagaTrabalho VagaEncontrada = buscarAnuncioBD(nomeVaga, CNPJ);
-
-        if(VagaEncontrada == null){
-            throw new notFound("Vaga com esse nome não encontrada na empresa");
-        }
-
-        vagaRepository.delete(VagaEncontrada);
+        anuncioRepository.delete(anuncioEncontrado);
 
         return true;
-    }*/
+    }
 
-    /*public boolean editarAnuncio(searchVaga searchVaga, novaVagaDTO novaVagaDTO){
-        var empresaResponsavel = empresaRepository.findEmpresaByCNPJ(searchVaga.empresaResponsavelCNPJ());
+    public boolean editarAnuncio(SearchAnuncioDTO searchAnuncio, Anuncio novoAnuncio){
+        Anuncio anuncioAntigo = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        if (empresaResponsavel == null){
-            throw new notFound("Empresa com este CNPJ no site não encontrado");
-        }
 
-        vagaTrabalho VagaAntiga = buscarAnuncioBD(searchVaga.nomeVaga(), searchVaga.empresaResponsavelCNPJ());
+        //Strategy-----------------------------
+        VagaTrabalho vagaParaAtualizar = (VagaTrabalho) anuncioAntigo;
 
-        if(VagaAntiga == null){
-            throw new notFound("Vaga com esse nome não encontrada na empresa");
-        }
-
-        //Cria a nova vaga usando o construtor
-        var NovaVaga = new vagaTrabalho(
-                (novaVagaDTO.empresaReponsavelCNPJ() == null) ? VagaAntiga.getEmpresaReponsavelCNPJ() : novaVagaDTO.empresaReponsavelCNPJ(),
-                (novaVagaDTO.servicoPrestadoNaOcasiao() == null) ? VagaAntiga.getServicoPrestadoNaOcasiao() : novaVagaDTO.servicoPrestadoNaOcasiao(),
-                (novaVagaDTO.cargo() == null) ? VagaAntiga.getCargoIndividuo() : novaVagaDTO.cargo(),
-                (novaVagaDTO.jornadaAmpla() == null) ? VagaAntiga.getJornadaAmpla() : novaVagaDTO.jornadaAmpla(),
-                (novaVagaDTO.jornandaDetalhada() == null) ? VagaAntiga.getJornandaDetalhada() : novaVagaDTO.jornandaDetalhada(),
-                (novaVagaDTO.numeroVagas() == null) ? VagaAntiga.getNumeroDeVagasAbertas() : novaVagaDTO.numeroVagas(),
-                (novaVagaDTO.pagamento() == null) ? VagaAntiga.getPagamento() : novaVagaDTO.pagamento(),
-                (novaVagaDTO.meioDeComunicacao() == null) ? VagaAntiga.getMeioDeComunicacao() : novaVagaDTO.meioDeComunicacao(),
-                (novaVagaDTO.equipamentoDeSeguranca() == null) ? VagaAntiga.getEquipamentoDeSeguranca() : novaVagaDTO.equipamentoDeSeguranca()
-        );
-
-        //SetID
-        NovaVaga.setVagaId(VagaAntiga.getVagaId());
+        vagaParaAtualizar.atualizarAnuncio(novoAnuncio);
+        //------------------------------------
 
         //Adiciona ao banco de dados
-        vagaRepository.save(NovaVaga);
+        vagaRepository.save(vagaParaAtualizar);
 
         return true;
-    }*/
-
-    public List<VagaTrabalho> buscaTodosAnuncios(){
-        return vagaRepository.findAll();
     }
+
+    /*public List<Anuncio> buscaTodosAnuncios(){
+        List<Anuncio> anuncios = anuncioRepository.findAll();
+
+        //Colocar no Strategy
+        List<VagaTrabalho> vagas = new ArrayList<>();
+
+        for(Anuncio anuncio : anuncios){
+            vagas.add((VagaTrabalho) anuncio);
+        }
+
+        return vagas;
+    }*/
 
 }

@@ -85,4 +85,19 @@ public class Anuncio {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
+
+    public void atualizarAnuncio(Anuncio novoAnuncio){
+        atualizarAtibutosComuns(novoAnuncio);
+        atualizarAtributosEspecificos(novoAnuncio);
+    }
+
+    public void atualizarAtibutosComuns(Anuncio novoAnuncio){
+        if (novoAnuncio.getNomeAnuncio() != null) this.nomeAnuncio = novoAnuncio.getNomeAnuncio();
+        if (novoAnuncio.getDescricaoAnuncio() != null) this.descricaoAnuncio = novoAnuncio.getDescricaoAnuncio();
+        if (novoAnuncio.getDescricaoAnuncio() != null) this.meioDeComunicacao = novoAnuncio.getMeioDeComunicacao();
+        if (novoAnuncio.getPagamento() != null) this.pagamento = novoAnuncio.getPagamento();
+        if (novoAnuncio.getQuantidade() != null) this.quantidade = novoAnuncio.getQuantidade();
+    }
+
+    public void atualizarAtributosEspecificos(Anuncio novoAnuncio){}
 }

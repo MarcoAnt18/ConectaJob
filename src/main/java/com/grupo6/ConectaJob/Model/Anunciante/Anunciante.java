@@ -103,7 +103,5 @@ public class Anunciante {
     }
 
 
-    public void atualizarAtributosEspecificos(Anunciante novoAnunciante){
-
-    }
+    public void atualizarAtributosEspecificos(Anunciante novoAnunciante){}
 }
