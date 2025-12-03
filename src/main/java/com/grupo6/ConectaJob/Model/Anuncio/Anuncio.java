@@ -7,13 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Anuncio {
 
     @Id
-    String anuncioId;
-    String anuncianteResponsavelId;
-    String nomeAnuncio;
-    String descricaoAnuncio;
-    String meioDeComunicacao;
-    String pagamento;
-    Integer quantidade;
+    private String anuncioId;
+    private String anuncianteResponsavelId;
+    private String nomeAnuncio;
+    private String descricaoAnuncio;
+    private String meioDeComunicacao;
+    private String pagamento;
+    private Integer quantidade;
 
     public Anuncio() {}
 

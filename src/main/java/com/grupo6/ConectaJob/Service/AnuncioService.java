@@ -1,60 +1,36 @@
 package com.grupo6.ConectaJob.Service;
 
-import com.grupo6.ConectaJob.Controller.VagaController.VagaController;
-import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.DuplicateEntityException;
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.AnuncioRepository;
+import com.grupo6.ConectaJob.Model.Anuncio.ValidarEntradaAnuncio;
 import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoAnuncioDTO;
 import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoVagaDTO;
 import com.grupo6.ConectaJob.Model.DTO.SearchAnuncioDTO;
-import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
-import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
-import jakarta.validation.OverridesAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 public class AnuncioService {
-    //Subistituir ----------------------------
-    @Autowired
-    private vagaRepository vagaRepository;
-
     @Autowired
     private AnuncioRepository anuncioRepository;
-    //------------------------------------------
 
-    //Subistituir ----------------------------
     @Autowired
     private AnuncianteRepository anuncianteRepository;
 
     @Autowired
-    private EmpresaRepository empresaRepository;
-    //----------------------------------------------
+    private ValidarEntradaAnuncio validarEntradaAnuncio;
 
     public boolean createAnuncio(Anuncio anuncio){
-        //Vira validação ------------------------------------------------
-        var anuncianteResponvalel = anuncianteRepository.findAnuncianteById(anuncio.getAnuncianteResponsavelId());
-
-        if (anuncianteResponvalel == null){
-            throw new notFound("Anunciante Atrelado com este ID não encontrado");
-        }
-
-        //Verifica se a vaga já foi cadastrada na empresa
-        Anuncio anuncioEncontrado = buscarAnuncioBD(anuncio.getNomeAnuncio(), anuncio.getAnuncianteResponsavelId());
-
-        if(anuncioEncontrado != null) {
-            throw new DuplicateEntityException("Anuncio já cadastrado");
-        }
-        //------------------------------------------------------------------
+        validarEntradaAnuncio.validarEntradaAnuncio(anuncio);
 
         anuncioRepository.save(anuncio);
+
         return true;
     }
 
@@ -113,7 +89,6 @@ public class AnuncioService {
     public boolean editarAnuncio(SearchAnuncioDTO searchAnuncio, Anuncio novoAnuncio){
         Anuncio anuncioAntigo = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-
         //Strategy-----------------------------
         VagaTrabalho vagaParaAtualizar = (VagaTrabalho) anuncioAntigo;
 
@@ -121,7 +96,7 @@ public class AnuncioService {
         //------------------------------------
 
         //Adiciona ao banco de dados
-        vagaRepository.save(vagaParaAtualizar);
+        anuncioRepository.save(vagaParaAtualizar);
 
         return true;
     }

@@ -4,6 +4,7 @@ import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.*;
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.AnuncioRepository;
+import com.grupo6.ConectaJob.Model.Anuncio.ValidarEntradaAnuncio;
 import com.grupo6.ConectaJob.Model.DTO.*;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
