@@ -2,12 +2,11 @@ package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
-import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
-import com.grupo6.ConectaJob.Model.Anuncio.AnuncioRepository;
-import com.grupo6.ConectaJob.Model.Anuncio.ValidarEntradaAnuncio;
+import com.grupo6.ConectaJob.Model.Anuncio.*;
 import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoAnuncioDTO;
-import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoVagaDTO;
 import com.grupo6.ConectaJob.Model.DTO.SearchAnuncioDTO;
+import com.grupo6.ConectaJob.Model.vaga.AtualizarVaga;
+import com.grupo6.ConectaJob.Model.vaga.CriarRetornoVagaDTO;
 import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,22 +36,9 @@ public class AnuncioService {
     public RetornoAnuncioDTO BuscarAnuncio(SearchAnuncioDTO searchAnuncio){
         Anuncio anuncioEncontrado = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        //Strategy----------------------------------------
-        VagaTrabalho vagaEncontrada = (VagaTrabalho) anuncioEncontrado;
+        StrategyRetornoAnuncioDTO criarDTO = new CriarRetornoVagaDTO();
 
-        return new RetornoVagaDTO(
-                vagaEncontrada.getAnuncianteResponsavelId(),
-                vagaEncontrada.getNomeAnuncio(),
-                vagaEncontrada.getDescricaoAnuncio(),
-                vagaEncontrada.getMeioDeComunicacao(),
-                vagaEncontrada.getPagamento(),
-                vagaEncontrada.getQuantidade(),
-                vagaEncontrada.getCargo(),
-                vagaEncontrada.getEquipamentoDeSeguranca(),
-                vagaEncontrada.getJornadaAmpla(),
-                vagaEncontrada.getJornandaDetalhada()
-        );
-        //----------------------------------------------------
+        return criarDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
     }
 
     //Usado para procurar um anúncio no banco de dados pelo nome do anúncio e ID do anunciante responsável
@@ -87,16 +73,13 @@ public class AnuncioService {
     }
 
     public boolean editarAnuncio(SearchAnuncioDTO searchAnuncio, Anuncio novoAnuncio){
-        Anuncio anuncioAntigo = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
+        Anuncio anuncioParaAtualizar = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        //Strategy-----------------------------
-        VagaTrabalho vagaParaAtualizar = (VagaTrabalho) anuncioAntigo;
+        StrategyAtualizarAnuncio atualizarAnuncio = new AtualizarVaga();
 
-        vagaParaAtualizar.atualizarAnuncio(novoAnuncio);
-        //------------------------------------
+        atualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
 
-        //Adiciona ao banco de dados
-        anuncioRepository.save(vagaParaAtualizar);
+        anuncioRepository.save(anuncioParaAtualizar);
 
         return true;
     }

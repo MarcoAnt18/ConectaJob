@@ -4,7 +4,6 @@ import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.*;
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.AnuncioRepository;
-import com.grupo6.ConectaJob.Model.Anuncio.ValidarEntradaAnuncio;
 import com.grupo6.ConectaJob.Model.DTO.*;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
@@ -14,7 +13,6 @@ import com.grupo6.ConectaJob.Model.DTO.Notificacao.RetornoNotificacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.userEmpresa.*;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
-import com.grupo6.ConectaJob.Model.vaga.vagaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +51,7 @@ public class AnuncianteService {
 
         Anunciante anuncianteRequeirdo = buscarAnuncianteBD(id);
 
-        StrategyRetornoAnuncianteDTO criarDTO = new RetornoEmpresaDTO();
+        StrategyRetornoAnuncianteDTO criarDTO = new CriarRetornoEmpresaDTO();
 
         return criarDTO.CriarRetornoAnuncianteDTO(anuncianteRequeirdo);
     }

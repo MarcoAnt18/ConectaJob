@@ -4,7 +4,7 @@ import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
 import com.grupo6.ConectaJob.Model.Anunciante.StrategyRetornoAnuncianteDTO;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
 
-public class RetornoEmpresaDTO implements StrategyRetornoAnuncianteDTO {
+public class CriarRetornoEmpresaDTO implements StrategyRetornoAnuncianteDTO {
 
     public RetornoAnuncianteDTO CriarRetornoAnuncianteDTO(Anunciante anunciante){
         Empresa empresa = (Empresa) anunciante;
