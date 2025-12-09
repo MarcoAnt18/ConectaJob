@@ -83,18 +83,4 @@ public class AnuncioService {
 
         return true;
     }
-
-    /*public List<Anuncio> buscaTodosAnuncios(){
-        List<Anuncio> anuncios = anuncioRepository.findAll();
-
-        //Colocar no Strategy
-        List<VagaTrabalho> vagas = new ArrayList<>();
-
-        for(Anuncio anuncio : anuncios){
-            vagas.add((VagaTrabalho) anuncio);
-        }
-
-        return vagas;
-    }*/
-
 }

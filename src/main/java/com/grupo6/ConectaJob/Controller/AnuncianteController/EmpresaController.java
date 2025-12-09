@@ -1,6 +1,5 @@
-package com.grupo6.ConectaJob.Controller.EmpresaController;
+package com.grupo6.ConectaJob.Controller.AnuncianteController;
 
-import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.RetornarJornadaDeTrabalhoDTO;
 import com.grupo6.ConectaJob.Model.DTO.Notificacao.BuscarJornadaDTO;
@@ -9,37 +8,22 @@ import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.DTO.editEmpresaDTO;
 import com.grupo6.ConectaJob.Model.DTO.searchDTO;
 import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
-import com.grupo6.ConectaJob.Service.AnuncianteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/empresa")
-public class AnuncianteController {
-    @Autowired
-    AnuncianteService anuncianteService;
+@RequestMapping("/anunciante")
+public class EmpresaController extends AnuncianteController {
 
-    @PostMapping("/criarEmpresa")
+    @PostMapping("/criarAnunciante")
     public boolean criarEmpresa (@RequestBody Empresa empresa){
         anuncianteService.createAnunciante(empresa);
         return true;
     }
 
-    @GetMapping("/buscarEmpresa")
-    public ResponseEntity<RetornoAnuncianteDTO> ProcurarEmpresasExistentes (@RequestBody searchDTO searchId){
-        return ResponseEntity.ok(anuncianteService.buscaAnunciante(searchId.id()));
-    }
-
-    @PutMapping("/editarEmpresa")
+    @PutMapping("/editarAnunciante")
     public boolean editarEmpresa(@RequestBody editEmpresaDTO editEmpresaDTO){
         anuncianteService.editarAnunciante(editEmpresaDTO.searchId(), editEmpresaDTO.novaEmpresa());
-        return true;
-    }
-
-    @DeleteMapping("/deletarEmpresa")
-    public boolean deletarEmpresa (@RequestBody searchDTO searchId){
-        anuncianteService.deletarAnunciante(searchId);
         return true;
     }
 
