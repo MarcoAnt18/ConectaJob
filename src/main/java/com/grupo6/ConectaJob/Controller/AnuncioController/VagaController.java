@@ -19,6 +19,4 @@ public class VagaController extends AnuncioController{
         anuncioService.editarAnuncio(editVagaDTO.searchAnuncioDTO(), editVagaDTO.novaVaga());
         return true;
     }
-
-
 }

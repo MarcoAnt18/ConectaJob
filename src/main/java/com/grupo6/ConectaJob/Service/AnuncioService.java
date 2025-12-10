@@ -1,6 +1,8 @@
 package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
+import com.grupo6.ConectaJob.MentoriasMarketPlace.Model.Mentoria.AtualizarMentoria;
+import com.grupo6.ConectaJob.MentoriasMarketPlace.Model.Mentoria.CriarRetornoMentoriaDTO;
 import com.grupo6.ConectaJob.Model.Anunciante.AnuncianteRepository;
 import com.grupo6.ConectaJob.Model.Anuncio.*;
 import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoAnuncioDTO;
@@ -9,6 +11,7 @@ import com.grupo6.ConectaJob.Model.vaga.AtualizarVaga;
 import com.grupo6.ConectaJob.Model.vaga.CriarRetornoVagaDTO;
 import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +26,7 @@ public class AnuncioService {
     private AnuncianteRepository anuncianteRepository;
 
     @Autowired
+    @Qualifier("ValidarEntradaMentoria")
     private ValidarEntradaAnuncio validarEntradaAnuncio;
 
     public boolean createAnuncio(Anuncio anuncio){
@@ -36,7 +40,7 @@ public class AnuncioService {
     public RetornoAnuncioDTO BuscarAnuncio(SearchAnuncioDTO searchAnuncio){
         Anuncio anuncioEncontrado = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        StrategyRetornoAnuncioDTO criarDTO = new CriarRetornoVagaDTO();
+        StrategyRetornoAnuncioDTO criarDTO = new CriarRetornoMentoriaDTO();
 
         return criarDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
     }
@@ -75,7 +79,7 @@ public class AnuncioService {
     public boolean editarAnuncio(SearchAnuncioDTO searchAnuncio, Anuncio novoAnuncio){
         Anuncio anuncioParaAtualizar = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        StrategyAtualizarAnuncio atualizarAnuncio = new AtualizarVaga();
+        StrategyAtualizarAnuncio atualizarAnuncio = new AtualizarMentoria();
 
         atualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
 

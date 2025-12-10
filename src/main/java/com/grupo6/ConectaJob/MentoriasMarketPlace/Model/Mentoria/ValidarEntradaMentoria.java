@@ -4,9 +4,11 @@ import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.ValidacaoExceptio
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.ValidarEntradaAnuncio;
 import com.grupo6.ConectaJob.Model.TempoSubdivicoes.IntervaloTempo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component("ValidarEntradaMentoria")
 public class ValidarEntradaMentoria extends ValidarEntradaAnuncio {
 
     public void validarAtributosEspecificos(Anuncio anuncioValidar){
