@@ -1,6 +1,9 @@
 package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
+import com.grupo6.ConectaJob.MentoriasMarketPlace.Model.Mentor.AtualizarMentor;
+import com.grupo6.ConectaJob.MentoriasMarketPlace.Model.Mentor.CriarRetornoMentorDTO;
+import com.grupo6.ConectaJob.MentoriasMarketPlace.Model.Mentor.ValidarEntradaMentor;
 import com.grupo6.ConectaJob.Model.Anunciante.*;
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.AnuncioRepository;
@@ -14,6 +17,7 @@ import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.userEmpresa.*;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,10 +29,11 @@ public class AnuncianteService {
     private UserGenericRepository userGenericRepository;
 
     @Autowired
-    private ValidarEntradaAnunciante validadorEntrada;
+    private AnuncianteRepository anuncianteRepository;
 
     @Autowired
-    private AnuncianteRepository anuncianteRepository;
+    @Qualifier("ValidarEntradaMentor")
+    private ValidarEntradaAnunciante validador;
 
     @Autowired
     JornadaDeTrabalhoService jornadaDeTrabalhoService;
@@ -40,7 +45,7 @@ public class AnuncianteService {
     NotificacaoService notificacaoService;
 
     public boolean createAnunciante(Anunciante anunciante){
-        validadorEntrada.validarAnunciante(anunciante);
+        validador.validarAnunciante(anunciante);
 
         anuncianteRepository.save(anunciante);
 
@@ -51,7 +56,7 @@ public class AnuncianteService {
 
         Anunciante anuncianteRequeirdo = buscarAnuncianteBD(id);
 
-        StrategyRetornoAnuncianteDTO criarDTO = new CriarRetornoEmpresaDTO();
+        StrategyRetornoAnuncianteDTO criarDTO = new CriarRetornoMentorDTO();
 
         return criarDTO.CriarRetornoAnuncianteDTO(anuncianteRequeirdo);
     }
@@ -59,7 +64,7 @@ public class AnuncianteService {
     public boolean editarAnunciante(searchDTO searchId, Anunciante novoAnunciante){
         Anunciante anuncianteParaAtualizar = buscarAnuncianteBD(searchId.id());
 
-        StrategyAtualizarAnunciante atualizarAnunciante = new AtualizarEmpresa();
+        StrategyAtualizarAnunciante atualizarAnunciante = new AtualizarMentor();
 
         atualizarAnunciante.atualizar(anuncianteParaAtualizar, novoAnunciante);
 

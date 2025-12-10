@@ -5,9 +5,11 @@ import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
 import com.grupo6.ConectaJob.Model.Anunciante.ValidarEntradaAnunciante;
 import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
 import com.grupo6.ConectaJob.Model.userEmpresa.servicoPrestado;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component("ValidarEntradaMentor")
 public class ValidarEntradaMentor extends ValidarEntradaAnunciante {
 
     public void validarAtributosEspecificos(Anunciante anunciante){

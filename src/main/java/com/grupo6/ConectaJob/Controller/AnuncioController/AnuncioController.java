@@ -14,12 +14,12 @@ public class AnuncioController {
     protected AnuncioService anuncioService;
 
     @GetMapping("/buscarAnuncio")
-    public ResponseEntity<RetornoAnuncioDTO> ProcurarVagaIndividual(@RequestBody SearchAnuncioDTO searchAnuncio){
+    public ResponseEntity<RetornoAnuncioDTO> ProcurarAnuncio(@RequestBody SearchAnuncioDTO searchAnuncio){
         return ResponseEntity.ok(anuncioService.BuscarAnuncio(searchAnuncio));
     }
 
     @DeleteMapping("/deletarAnuncio")
-    public boolean deletarVaga(@RequestBody SearchAnuncioDTO searchAnuncio){
+    public boolean deletarAnuncio(@RequestBody SearchAnuncioDTO searchAnuncio){
         anuncioService.deletarAnuncio(searchAnuncio.nomeAnuncio(), searchAnuncio.anuncianteResponsavelId());
         return true;
     }

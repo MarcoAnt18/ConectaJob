@@ -5,14 +5,15 @@ import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.ValidacaoExceptio
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 public abstract class ValidarEntradaAnunciante {
 
     @Autowired
-    private UserGenericRepository userGenericRepository;
+    protected UserGenericRepository userGenericRepository;
 
     @Autowired
-    private AnuncianteRepository anuncianteRepository;
+    protected AnuncianteRepository anuncianteRepository;
 
     public void validarAnunciante(Anunciante anunciante){
         validarAtributosAnunciante(anunciante);
