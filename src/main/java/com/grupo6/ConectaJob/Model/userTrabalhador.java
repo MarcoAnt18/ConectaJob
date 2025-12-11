@@ -1,7 +1,6 @@
 package com.grupo6.ConectaJob.Model;
 
 import com.grupo6.ConectaJob.Model.userGeneric.Usuario;
-import com.grupo6.ConectaJob.Model.userGeneric.userGeneric;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,5 +37,10 @@ public class userTrabalhador extends Usuario {
         return Formacao;
     }
 
-    public
+    @Override
+    public void atualizarAtributosespecificos(Usuario novousuario) {
+        super.atualizarAtributosespecificos(novousuario);
+
+        userTrabalhador trabalhador = (userTrabalhador) novousuario;
+    }
 }

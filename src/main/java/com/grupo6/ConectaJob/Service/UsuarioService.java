@@ -1,6 +1,7 @@
 package com.grupo6.ConectaJob.Service;
 
 import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
+import com.grupo6.ConectaJob.Model.DTO.RetornoTrabalhadorDTO;
 import com.grupo6.ConectaJob.Model.DTO.SearchCPF;
 import com.grupo6.ConectaJob.Model.DTO.retornoUsuarioDTO;
 import com.grupo6.ConectaJob.Model.userGeneric.*;
@@ -46,11 +47,12 @@ public class UsuarioService {
         return usuario;
     }
 
-    public retornoUsuarioDTO BuscarUsuario(String CPF){
+    public retornoUsuarioDTO BuscarUsuario(SearchCPF cpfTrabalhador){
 
-        Usuario usuariobuscado = BuscarUsuarioBD(CPF);
+        Usuario usuariobuscado = BuscarUsuarioBD(cpfTrabalhador.CPF());
 
-        retornoUsuarioDTO UsuarioDTO = new
+        StrategyRetornoUsuarioDTO criarUsuario = new CriarRetornoUsuarioDTO();
+        return criarUsuario.criarretornoUsuario(usuariobuscado);
 
     }
 
