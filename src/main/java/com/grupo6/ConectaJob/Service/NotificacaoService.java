@@ -135,13 +135,13 @@ public class NotificacaoService {
         return vagaInformada;
     }
 
-    public NotificacaoUsuarioInfo pegarUsuarioInfos(userGeneric usuario){
+    /*public NotificacaoUsuarioInfo pegarUsuarioInfos(userGeneric usuario){
        return new NotificacaoUsuarioInfo(
                 usuario.getCpf(),
                 usuario.getNome(),
                 usuario.getDtNascimento()
                 );
-    }
+    }*/
 
     public NotificacaoVagaInfo pegarVagaInfos(vagaTrabalho vaga){
         return new NotificacaoVagaInfo(

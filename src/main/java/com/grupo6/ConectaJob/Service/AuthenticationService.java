@@ -9,6 +9,7 @@ import com.grupo6.ConectaJob.Model.DTO.loginTrabalhadorDTO;
 import com.grupo6.ConectaJob.Model.notificacao.Notificacao;
 import com.grupo6.ConectaJob.Model.userEmpresa.EmpresaRepository;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
+import com.grupo6.ConectaJob.Model.userGeneric.Usuario;
 import com.grupo6.ConectaJob.Model.userTrabalhador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,11 +49,11 @@ public class AuthenticationService {
     @PostMapping("/createUser")
     public void createTrabalhadorUer(@RequestBody createTrabalhadorUserDTO createTrabalhadorUserDTO) {
 
-        var newTrabalhador = new userTrabalhador();
-        newTrabalhador.setNome(createTrabalhadorUserDTO.nome());
-        newTrabalhador.setCpf(createTrabalhadorUserDTO.cpf());
-        newTrabalhador.setSenha(passwordEncoder.encode(createTrabalhadorUserDTO.senha()));
+        var newUsuario = new Usuario();
+        newUsuario.setNome(createTrabalhadorUserDTO.nome());
+        newUsuario.setCpf(createTrabalhadorUserDTO.cpf());
+        newUsuario.setSenha(passwordEncoder.encode(createTrabalhadorUserDTO.senha()));
 
-        UserGenericRepository.save(newTrabalhador);
+        UserGenericRepository.save(newUsuario);
     }
 }

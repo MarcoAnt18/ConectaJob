@@ -25,14 +25,7 @@ public class userGeneric implements UserDetails {
 
     private String cpf;
 
-    private String nome;
-
     private String senha;
-
-    private LocalDate dtNascimento;
-
-    private String ftPerfilLink;
-
 
 
     @Override
@@ -78,16 +71,8 @@ public class userGeneric implements UserDetails {
         return cpf;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
     public String getSenha() {
         return senha;
-    }
-
-    public LocalDate getDtNascimento(){
-        return this.dtNascimento;
     }
 
     public void setId(String id) {
@@ -98,15 +83,8 @@ public class userGeneric implements UserDetails {
         this.cpf = cpf;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public void setDtNascimento(LocalDate dtNascimento){
-        this.dtNascimento = dtNascimento;
-    }
 }
