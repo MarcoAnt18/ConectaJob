@@ -2,7 +2,9 @@ package com.grupo6.ConectaJob.Model.userEmpresa;
 
 import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
 import com.grupo6.ConectaJob.Model.Anunciante.StrategyAtualizarAnunciante;
+import org.springframework.stereotype.Component;
 
+@Component("AtualizarEmpresa")
 public class AtualizarEmpresa implements StrategyAtualizarAnunciante {
 
     public void atualizar(Anunciante anuncianteParaAtualziar, Anunciante novoAnunciante){

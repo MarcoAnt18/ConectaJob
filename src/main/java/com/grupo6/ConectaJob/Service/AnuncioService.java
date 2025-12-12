@@ -9,6 +9,7 @@ import com.grupo6.ConectaJob.Model.vaga.AtualizarVaga;
 import com.grupo6.ConectaJob.Model.vaga.CriarRetornoVagaDTO;
 import com.grupo6.ConectaJob.Model.vaga.VagaTrabalho;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,16 @@ public class AnuncioService {
     private AnuncianteRepository anuncianteRepository;
 
     @Autowired
+    @Qualifier("ValidarEntradaVaga")
     private ValidarEntradaAnuncio validarEntradaAnuncio;
+
+    @Autowired
+    @Qualifier("CriarRetornoVagaDTO")
+    private StrategyRetornoAnuncioDTO strategyRetornoAnuncioDTO;
+
+    @Autowired
+    @Qualifier("AtualizarVaga")
+    private  StrategyAtualizarAnuncio strategyAtualizarAnuncio;
 
     public boolean createAnuncio(Anuncio anuncio){
         validarEntradaAnuncio.validarEntradaAnuncio(anuncio);
@@ -36,13 +46,11 @@ public class AnuncioService {
     public RetornoAnuncioDTO BuscarAnuncio(SearchAnuncioDTO searchAnuncio){
         Anuncio anuncioEncontrado = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        StrategyRetornoAnuncioDTO criarDTO = new CriarRetornoVagaDTO();
-
-        return criarDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
+        return strategyRetornoAnuncioDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
     }
 
     //Usado para procurar um anúncio no banco de dados pelo nome do anúncio e ID do anunciante responsável
-    public Anuncio buscarAnuncioBD(String nomeAnuncio, String anuncianteID) {
+    private Anuncio buscarAnuncioBD(String nomeAnuncio, String anuncianteID) {
         //Verifica se o anunciante
         var anuncianteResponsavel = anuncianteRepository.findAnuncianteById(anuncianteID);
 
@@ -75,9 +83,7 @@ public class AnuncioService {
     public boolean editarAnuncio(SearchAnuncioDTO searchAnuncio, Anuncio novoAnuncio){
         Anuncio anuncioParaAtualizar = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        StrategyAtualizarAnuncio atualizarAnuncio = new AtualizarVaga();
-
-        atualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
+        strategyAtualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
 
         anuncioRepository.save(anuncioParaAtualizar);
 

@@ -12,16 +12,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/anunciante")
+@RequestMapping("/empresa")
 public class EmpresaController extends AnuncianteController {
 
-    @PostMapping("/criarAnunciante")
+    @PostMapping("/criarEmpresa")
     public boolean criarEmpresa (@RequestBody Empresa empresa){
         anuncianteService.createAnunciante(empresa);
         return true;
     }
 
-    @PutMapping("/editarAnunciante")
+    @PutMapping("/editarEmpresa")
     public boolean editarEmpresa(@RequestBody editEmpresaDTO editEmpresaDTO){
         anuncianteService.editarAnunciante(editEmpresaDTO.searchId(), editEmpresaDTO.novaEmpresa());
         return true;

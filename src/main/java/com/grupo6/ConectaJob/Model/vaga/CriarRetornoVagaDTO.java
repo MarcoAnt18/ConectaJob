@@ -4,7 +4,9 @@ import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.StrategyRetornoAnuncioDTO;
 import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoAnuncioDTO;
 import com.grupo6.ConectaJob.Model.DTO.Anuncio.RetornoVagaDTO;
+import org.springframework.stereotype.Component;
 
+@Component("CriarRetornoVagaDTO")
 public class CriarRetornoVagaDTO implements StrategyRetornoAnuncioDTO {
 
     public RetornoAnuncioDTO criarRetornoAnuncioDTO(Anuncio anuncio){

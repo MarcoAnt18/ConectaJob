@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("ValidarEntradaVaga")
 public class ValidarEntradaVaga extends ValidarEntradaAnuncio {
 
     public void validarAtributosEspecificos(Anuncio anuncioValidar){
@@ -22,7 +22,7 @@ public class ValidarEntradaVaga extends ValidarEntradaAnuncio {
         validarJornadaDetalhada(vagaValidar.getJornandaDetalhada());
     }
 
-    public void validarCargo(Cargo cargo){
+    private void validarCargo(Cargo cargo){
         if (cargo == null){
             throw new ValidacaoException("O Cargo não pode ser nulo");
         }
@@ -34,16 +34,16 @@ public class ValidarEntradaVaga extends ValidarEntradaAnuncio {
         validarTamanhoString(cargo.getVisaoCargo(), "Visão do Cargo", 5, 500);
     }
 
-    public void validarEquipamentoDeSeguranca(String equipamentoDeSeguranca){
+    private void validarEquipamentoDeSeguranca(String equipamentoDeSeguranca){
         validarStringNula(equipamentoDeSeguranca, "Equipamento de Segurança");
         validarTamanhoString(equipamentoDeSeguranca, "Equipamento de Segurança", 3, 200);
     }
 
-    public void validarJornadaAmpla(IntervaloTempo jornadaAmpla){
+    private void validarJornadaAmpla(IntervaloTempo jornadaAmpla){
         validarIntervaloTempo(jornadaAmpla);
     }
 
-    public void validarJornadaDetalhada(IntervaloTempoSalvosubCategorias jornadaDetalhada){
+    private void validarJornadaDetalhada(IntervaloTempoSalvosubCategorias jornadaDetalhada){
         if (jornadaDetalhada == null){
             throw new ValidacaoException("A jornada Detalhada não pode ser nula");
         }

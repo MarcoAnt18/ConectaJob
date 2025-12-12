@@ -4,6 +4,7 @@ import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.notFound;
 import com.grupo6.ConectaJob.Model.Anunciante.*;
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.AnuncioRepository;
+import com.grupo6.ConectaJob.Model.Anuncio.StrategyRetornoAnuncioDTO;
 import com.grupo6.ConectaJob.Model.DTO.*;
 import com.grupo6.ConectaJob.Model.DTO.Anunciante.RetornoAnuncianteDTO;
 import com.grupo6.ConectaJob.Model.DTO.JornadaDeTrabalho.MarcarPontoDTO;
@@ -14,6 +15,7 @@ import com.grupo6.ConectaJob.Model.DTO.Notificacao.deletarNotifcacaoDTO;
 import com.grupo6.ConectaJob.Model.userEmpresa.*;
 import com.grupo6.ConectaJob.Model.userGeneric.UserGenericRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +27,16 @@ public class AnuncianteService {
     private UserGenericRepository userGenericRepository;
 
     @Autowired
+    @Qualifier("ValidarEntradaEmpresa")
     private ValidarEntradaAnunciante validadorEntrada;
+
+    @Autowired
+    @Qualifier("CriarRetornoEmpresaDTO")
+    private StrategyRetornoAnuncianteDTO strategyRetornoAnuncioDTO;
+
+    @Autowired
+    @Qualifier("AtualizarEmpresa")
+    private StrategyAtualizarAnunciante strategyAtualizarAnunciante;
 
     @Autowired
     private AnuncianteRepository anuncianteRepository;
@@ -51,17 +62,13 @@ public class AnuncianteService {
 
         Anunciante anuncianteRequeirdo = buscarAnuncianteBD(id);
 
-        StrategyRetornoAnuncianteDTO criarDTO = new CriarRetornoEmpresaDTO();
-
-        return criarDTO.CriarRetornoAnuncianteDTO(anuncianteRequeirdo);
+        return strategyRetornoAnuncioDTO.CriarRetornoAnuncianteDTO(anuncianteRequeirdo);
     }
 
     public boolean editarAnunciante(searchDTO searchId, Anunciante novoAnunciante){
         Anunciante anuncianteParaAtualizar = buscarAnuncianteBD(searchId.id());
 
-        StrategyAtualizarAnunciante atualizarAnunciante = new AtualizarEmpresa();
-
-        atualizarAnunciante.atualizar(anuncianteParaAtualizar, novoAnunciante);
+        strategyAtualizarAnunciante.atualizar(anuncianteParaAtualizar, novoAnunciante);
 
         anuncianteRepository.save(anuncianteParaAtualizar);
 
@@ -84,7 +91,7 @@ public class AnuncianteService {
         return true;
     }
 
-    public Anunciante buscarAnuncianteBD(String id){
+    private Anunciante buscarAnuncianteBD(String id){
         Anunciante anuncianteBusca = anuncianteRepository.findAnuncianteById(id);
 
         if (anuncianteBusca == null){

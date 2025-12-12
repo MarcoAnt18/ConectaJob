@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Component("ValidarEntradaEmpresa")
 public class ValidarEntradaEmpresa extends ValidarEntradaAnunciante {
 
     public void validarAtributosEspecificos(Anunciante anunciante){
@@ -16,7 +16,7 @@ public class ValidarEntradaEmpresa extends ValidarEntradaAnunciante {
         validarServicoPrestado(empresaValidar.getServicoPrestado());
     }
 
-    public void validarCNPJ(String CNPJ){
+    private void validarCNPJ(String CNPJ){
         //Verifica se o CNPJ é vazio
         if(!validarEntradaVazia(CNPJ)){
             throw new ValidacaoException("CNPJ não informado");
@@ -41,7 +41,7 @@ public class ValidarEntradaEmpresa extends ValidarEntradaAnunciante {
         }
     }
 
-    public void validarSegmento(String segmento){
+    private void validarSegmento(String segmento){
         if(!validarEntradaVazia(segmento)){
             throw new ValidacaoException("Segmento não informado");
         }
@@ -51,7 +51,7 @@ public class ValidarEntradaEmpresa extends ValidarEntradaAnunciante {
         }
     }
 
-    public void validarServicoPrestado(List<servicoPrestado> servicoPrestado){
+    private void validarServicoPrestado(List<servicoPrestado> servicoPrestado){
         if(servicoPrestado == null || servicoPrestado.isEmpty()){
             throw new ValidacaoException("Nenhum serviço prestado informado");
         }
