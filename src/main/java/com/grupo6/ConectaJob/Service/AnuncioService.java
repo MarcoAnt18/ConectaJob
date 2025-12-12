@@ -48,11 +48,7 @@ public class AnuncioService {
     public RetornoAnuncioDTO BuscarAnuncio(SearchAnuncioDTO searchAnuncio){
         Anuncio anuncioEncontrado = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        //StrategyRetornoAnuncioDTO criarDTO = new CriarRetornoMentoriaDTO();
-
         return strategyRetornoAnuncioDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
-
-        //return criarDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
     }
 
     //Usado para procurar um anúncio no banco de dados pelo nome do anúncio e ID do anunciante responsável
@@ -88,10 +84,6 @@ public class AnuncioService {
 
     public boolean editarAnuncio(SearchAnuncioDTO searchAnuncio, Anuncio novoAnuncio){
         Anuncio anuncioParaAtualizar = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
-
-        //StrategyAtualizarAnuncio atualizarAnuncio = new AtualizarMentoria();
-
-        //atualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
 
         strategyAtualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
 
