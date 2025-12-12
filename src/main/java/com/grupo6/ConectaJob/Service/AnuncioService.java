@@ -29,6 +29,14 @@ public class AnuncioService {
     @Qualifier("ValidarEntradaMentoria")
     private ValidarEntradaAnuncio validarEntradaAnuncio;
 
+    @Autowired
+    @Qualifier("CriarRetornoMentoriaDTO")
+    private StrategyRetornoAnuncioDTO strategyRetornoAnuncioDTO;
+
+    @Autowired
+    @Qualifier("AtualizarMentoria")
+    private StrategyAtualizarAnuncio strategyAtualizarAnuncio;
+
     public boolean createAnuncio(Anuncio anuncio){
         validarEntradaAnuncio.validarEntradaAnuncio(anuncio);
 
@@ -40,13 +48,15 @@ public class AnuncioService {
     public RetornoAnuncioDTO BuscarAnuncio(SearchAnuncioDTO searchAnuncio){
         Anuncio anuncioEncontrado = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        StrategyRetornoAnuncioDTO criarDTO = new CriarRetornoMentoriaDTO();
+        //StrategyRetornoAnuncioDTO criarDTO = new CriarRetornoMentoriaDTO();
 
-        return criarDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
+        return strategyRetornoAnuncioDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
+
+        //return criarDTO.criarRetornoAnuncioDTO(anuncioEncontrado);
     }
 
     //Usado para procurar um anúncio no banco de dados pelo nome do anúncio e ID do anunciante responsável
-    public Anuncio buscarAnuncioBD(String nomeAnuncio, String anuncianteID) {
+    private Anuncio buscarAnuncioBD(String nomeAnuncio, String anuncianteID) {
         //Verifica se o anunciante
         var anuncianteResponsavel = anuncianteRepository.findAnuncianteById(anuncianteID);
 
@@ -79,9 +89,11 @@ public class AnuncioService {
     public boolean editarAnuncio(SearchAnuncioDTO searchAnuncio, Anuncio novoAnuncio){
         Anuncio anuncioParaAtualizar = buscarAnuncioBD(searchAnuncio.nomeAnuncio(),searchAnuncio.anuncianteResponsavelId());
 
-        StrategyAtualizarAnuncio atualizarAnuncio = new AtualizarMentoria();
+        //StrategyAtualizarAnuncio atualizarAnuncio = new AtualizarMentoria();
 
-        atualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
+        //atualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
+
+        strategyAtualizarAnuncio.atualizar(anuncioParaAtualizar, novoAnuncio);
 
         anuncioRepository.save(anuncioParaAtualizar);
 

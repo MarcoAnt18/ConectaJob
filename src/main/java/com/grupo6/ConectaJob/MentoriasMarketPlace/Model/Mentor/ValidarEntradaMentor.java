@@ -19,7 +19,7 @@ public class ValidarEntradaMentor extends ValidarEntradaAnunciante {
         validarCertificacoes(mentorValidar.getCertificacoes());
     }
 
-    public void validarAreaAtuacao(String areaAtuacao){
+    private void validarAreaAtuacao(String areaAtuacao){
         if(!validarEntradaVazia(areaAtuacao)){
             throw new ValidacaoException("Área de atuação não informada");
         }
@@ -29,7 +29,7 @@ public class ValidarEntradaMentor extends ValidarEntradaAnunciante {
         }
     }
 
-    public void validarBiografia(String biografia){
+    private void validarBiografia(String biografia){
         if(!validarEntradaVazia(biografia)){
             throw new ValidacaoException("Biografia não informada");
         }
@@ -39,7 +39,7 @@ public class ValidarEntradaMentor extends ValidarEntradaAnunciante {
         }
     }
 
-    public void validarCertificacoes(List<String> certificacoes){
+    private void validarCertificacoes(List<String> certificacoes){
         if(certificacoes == null){
             throw new ValidacaoException("Nenhuma certificado informado");
         }

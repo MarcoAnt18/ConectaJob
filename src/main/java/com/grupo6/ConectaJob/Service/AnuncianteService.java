@@ -36,6 +36,14 @@ public class AnuncianteService {
     private ValidarEntradaAnunciante validador;
 
     @Autowired
+    @Qualifier("CriarRetornoMentorDTO")
+    private StrategyRetornoAnuncianteDTO strategyRetornoAnuncianteDTO;
+
+    @Autowired
+    @Qualifier("AtualizarMentor")
+    private StrategyAtualizarAnunciante strategyAtualizarAnunciante;
+
+    @Autowired
     JornadaDeTrabalhoService jornadaDeTrabalhoService;
 
     @Autowired
@@ -53,20 +61,15 @@ public class AnuncianteService {
     }
 
     public RetornoAnuncianteDTO buscaAnunciante(String id){
-
         Anunciante anuncianteRequeirdo = buscarAnuncianteBD(id);
 
-        StrategyRetornoAnuncianteDTO criarDTO = new CriarRetornoMentorDTO();
-
-        return criarDTO.CriarRetornoAnuncianteDTO(anuncianteRequeirdo);
+        return strategyRetornoAnuncianteDTO.CriarRetornoAnuncianteDTO(anuncianteRequeirdo);
     }
 
     public boolean editarAnunciante(searchDTO searchId, Anunciante novoAnunciante){
         Anunciante anuncianteParaAtualizar = buscarAnuncianteBD(searchId.id());
 
-        StrategyAtualizarAnunciante atualizarAnunciante = new AtualizarMentor();
-
-        atualizarAnunciante.atualizar(anuncianteParaAtualizar, novoAnunciante);
+        strategyAtualizarAnunciante.atualizar(anuncianteParaAtualizar, novoAnunciante);
 
         anuncianteRepository.save(anuncianteParaAtualizar);
 
@@ -89,7 +92,7 @@ public class AnuncianteService {
         return true;
     }
 
-    public Anunciante buscarAnuncianteBD(String id){
+    private Anunciante buscarAnuncianteBD(String id){
         Anunciante anuncianteBusca = anuncianteRepository.findAnuncianteById(id);
 
         if (anuncianteBusca == null){
