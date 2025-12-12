@@ -21,7 +21,7 @@ public abstract class ValidarEntradaAnuncio {
         validarAtributosEspecificos(anuncioValidar);
     }
 
-    public void validarAtributosAnuncio(Anuncio anuncioValidar){
+    protected void validarAtributosAnuncio(Anuncio anuncioValidar){
         validarAnuncianteResponsavelId(anuncioValidar.getAnuncianteResponsavelId());
         validarNomeAnuncio(anuncioValidar.getNomeAnuncio());
         validarAnuncioDuplicado(anuncioValidar.getNomeAnuncio(), anuncioValidar.getAnuncianteResponsavelId());
@@ -31,7 +31,7 @@ public abstract class ValidarEntradaAnuncio {
         validarQuantidade(anuncioValidar.getQuantidade());
     }
 
-    public void validarAnuncianteResponsavelId(String AnuncianteResponsavelId){
+    protected void validarAnuncianteResponsavelId(String AnuncianteResponsavelId){
         validarStringNula(AnuncianteResponsavelId, "AnuncianteResponsavelId");
 
         //Verifica se o Anunciante Responsável existe
@@ -42,12 +42,12 @@ public abstract class ValidarEntradaAnuncio {
         }
     }
 
-    public void validarNomeAnuncio(String nome){
+    protected void validarNomeAnuncio(String nome){
         validarStringNula(nome, "Nome do Anúncio");
         validarTamanhoString(nome, "Nome do Anúncio", 3, 100);
     }
 
-    public void validarAnuncioDuplicado(String nomeAnuncio, String AnuncianteResponsavelId){
+    protected void validarAnuncioDuplicado(String nomeAnuncio, String AnuncianteResponsavelId){
         //Verifica se o anuncio já foi cadastrado
         List<Anuncio> anuncios = anuncioRepository.findAll();
 
@@ -60,21 +60,21 @@ public abstract class ValidarEntradaAnuncio {
         }
     }
 
-    public void validarDescricaoAnuncio(String descricao){
+    protected void validarDescricaoAnuncio(String descricao){
         validarStringNula(descricao, "Descrição");
         validarTamanhoString(descricao, "Descrição", 10, 500);
     }
 
-    public void validarMeioDeComunicacao(String meioDeComunicacao){
+    protected void validarMeioDeComunicacao(String meioDeComunicacao){
         validarStringNula(meioDeComunicacao, "Meio de Comunicação");
         validarTamanhoString(meioDeComunicacao, "Meio de Comunicação", 3, 400);
     }
 
-    public void validarPagamento(String pagamento){
+    protected void validarPagamento(String pagamento){
         validarStringNula(pagamento, "Pagamento");
     }
 
-    public void validarQuantidade(Integer quantidade){
+    protected void validarQuantidade(Integer quantidade){
         if (quantidade == null){
             throw new ValidacaoException("Quantidade não pode ser vazio");
         }
@@ -84,18 +84,18 @@ public abstract class ValidarEntradaAnuncio {
         }
     }
 
-    public void validarStringNula(String string, String campo){
+    protected void validarStringNula(String string, String campo){
         if(string == null || string.isBlank()){
             throw new ValidacaoException(campo + " Não pode ser vazio");
         }
     }
 
-    public void validarTamanhoString(String string, String campo, int min, int max){
+    protected void validarTamanhoString(String string, String campo, int min, int max){
         if(string.length() < min || string.length() > max){
             throw new ValidacaoException(campo + " deve estar entre " + min + " e " + max + " caracteres");
         }
     }
 
-    public abstract void validarAtributosEspecificos(Anuncio anuncioValidar);
+    protected abstract void validarAtributosEspecificos(Anuncio anuncioValidar);
 }
 

@@ -20,7 +20,7 @@ public abstract class ValidarEntradaAnunciante {
         validarAtributosEspecificos(anunciante);
     }
 
-    public void validarAtributosAnunciante(Anunciante anuncianteValidar){
+    protected void validarAtributosAnunciante(Anunciante anuncianteValidar){
         validarCPF(anuncianteValidar.getCpfAtrelado());
         validarAnuncianteDuplicado(anuncianteValidar.getCpfAtrelado());
         validarNomeAnunciante(anuncianteValidar.getNomeAnunciante());
@@ -28,7 +28,7 @@ public abstract class ValidarEntradaAnunciante {
         validarftPerfilLink(anuncianteValidar.getFtPerfilLink());
     }
 
-    public void validarCPF(String CPF){
+    protected void validarCPF(String CPF){
 
         //Verifica se o CPF é vazio
         if(!validarEntradaVazia(CPF)){
@@ -61,7 +61,7 @@ public abstract class ValidarEntradaAnunciante {
         }
     }
 
-    public void validarNomeAnunciante(String nomeAnunciante){
+    protected void validarNomeAnunciante(String nomeAnunciante){
         if (!validarEntradaVazia(nomeAnunciante)){
             throw new ValidacaoException("Nome do anunciante não informado");
         }
@@ -71,7 +71,7 @@ public abstract class ValidarEntradaAnunciante {
         }
     }
 
-    public void validarMeioDeComunicacaoo(String meioDeComunicacao){
+    protected void validarMeioDeComunicacaoo(String meioDeComunicacao){
         if (!validarEntradaVazia(meioDeComunicacao)){
             throw new ValidacaoException("Nome do anunciante não informado");
         }
@@ -81,7 +81,7 @@ public abstract class ValidarEntradaAnunciante {
         }
     }
 
-    public void validarftPerfilLink(String ftPerfilLink){
+    protected void validarftPerfilLink(String ftPerfilLink){
         if (!validarEntradaVazia(ftPerfilLink)){
             throw new ValidacaoException("Nome do anunciante não informado");
         }
@@ -92,7 +92,7 @@ public abstract class ValidarEntradaAnunciante {
         }
     }
 
-    public boolean validarEntradaVazia(String entrada){
+    protected boolean validarEntradaVazia(String entrada){
         if (entrada == null || entrada.isBlank()){
             return false;
         }
@@ -100,7 +100,7 @@ public abstract class ValidarEntradaAnunciante {
         return true;
     }
 
-    public boolean validarMaxCaracteres(String entrada, int numMaximo){
+    protected boolean validarMaxCaracteres(String entrada, int numMaximo){
         if (entrada.length() > numMaximo){
             return false;
         }
@@ -109,7 +109,7 @@ public abstract class ValidarEntradaAnunciante {
 
     }
 
-    public void validarAnuncianteDuplicado(String CPFAtrelado){
+    protected void validarAnuncianteDuplicado(String CPFAtrelado){
         var buscaAnunciante = anuncianteRepository.findAnuncianteByCpfAtrelado(CPFAtrelado);
 
         if (buscaAnunciante != null){
@@ -117,5 +117,5 @@ public abstract class ValidarEntradaAnunciante {
         }
     }
 
-    public abstract void validarAtributosEspecificos(Anunciante anunciante);
+    protected abstract void validarAtributosEspecificos(Anunciante anunciante);
 }
