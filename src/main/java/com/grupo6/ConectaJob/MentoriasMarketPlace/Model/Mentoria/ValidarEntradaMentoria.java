@@ -4,9 +4,11 @@ import com.grupo6.ConectaJob.ExceptionsConfig.ExceptionsPerson.ValidacaoExceptio
 import com.grupo6.ConectaJob.Model.Anuncio.Anuncio;
 import com.grupo6.ConectaJob.Model.Anuncio.ValidarEntradaAnuncio;
 import com.grupo6.ConectaJob.Model.TempoSubdivicoes.IntervaloTempo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component("ValidarEntradaMentoria")
 public class ValidarEntradaMentoria extends ValidarEntradaAnuncio {
 
     public void validarAtributosEspecificos(Anuncio anuncioValidar){
@@ -18,17 +20,17 @@ public class ValidarEntradaMentoria extends ValidarEntradaAnuncio {
         validarHorariosDisponiveis(mentoriaValidar.getHorariosDisponiveis());
     }
 
-    public void validarFormatoMentoria(String formatoMentoria){
+    private void validarFormatoMentoria(String formatoMentoria){
         validarStringNula(formatoMentoria, "Formato da Mentoria");
         validarTamanhoString(formatoMentoria, "Formato da Mentoria", 3, 50);
     }
-    
-    public void validarNivelMentoria(String nivelMentoria){
+
+    private void validarNivelMentoria(String nivelMentoria){
         validarStringNula(nivelMentoria, "Nível da mentoria");
         validarTamanhoString(nivelMentoria, "Nível da mentoria", 3, 40);
     }
 
-    public void validarTemasPrincipais(List<String> temasPrincipais){
+    private void validarTemasPrincipais(List<String> temasPrincipais){
         if(temasPrincipais == null){
             throw new ValidacaoException("Nenhum Tema principal");
         }
@@ -41,7 +43,7 @@ public class ValidarEntradaMentoria extends ValidarEntradaAnuncio {
         }
     }
 
-    public void validarHorariosDisponiveis(List<IntervaloTempo> horariosDisponiveis){
+    private void validarHorariosDisponiveis(List<IntervaloTempo> horariosDisponiveis){
         if(horariosDisponiveis == null){
             throw new ValidacaoException("Nenhum Horário disponível informado");
         }

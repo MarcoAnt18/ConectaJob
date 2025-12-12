@@ -5,9 +5,11 @@ import com.grupo6.ConectaJob.Model.Anunciante.Anunciante;
 import com.grupo6.ConectaJob.Model.Anunciante.ValidarEntradaAnunciante;
 import com.grupo6.ConectaJob.Model.userEmpresa.Empresa;
 import com.grupo6.ConectaJob.Model.userEmpresa.servicoPrestado;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component("ValidarEntradaMentor")
 public class ValidarEntradaMentor extends ValidarEntradaAnunciante {
 
     public void validarAtributosEspecificos(Anunciante anunciante){
@@ -17,7 +19,7 @@ public class ValidarEntradaMentor extends ValidarEntradaAnunciante {
         validarCertificacoes(mentorValidar.getCertificacoes());
     }
 
-    public void validarAreaAtuacao(String areaAtuacao){
+    private void validarAreaAtuacao(String areaAtuacao){
         if(!validarEntradaVazia(areaAtuacao)){
             throw new ValidacaoException("Área de atuação não informada");
         }
@@ -27,7 +29,7 @@ public class ValidarEntradaMentor extends ValidarEntradaAnunciante {
         }
     }
 
-    public void validarBiografia(String biografia){
+    private void validarBiografia(String biografia){
         if(!validarEntradaVazia(biografia)){
             throw new ValidacaoException("Biografia não informada");
         }
@@ -37,7 +39,7 @@ public class ValidarEntradaMentor extends ValidarEntradaAnunciante {
         }
     }
 
-    public void validarCertificacoes(List<String> certificacoes){
+    private void validarCertificacoes(List<String> certificacoes){
         if(certificacoes == null){
             throw new ValidacaoException("Nenhuma certificado informado");
         }
